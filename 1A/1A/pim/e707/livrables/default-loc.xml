@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Locations >
+  <Project>
+    <vfs_file>/home/mbenahme/e707/livrables/default.gpr</vfs_file>
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project>/home/mbenahme/e707/livrables/default.gpr</vfs_project>
+      <vfs_file>/home/mbenahme/e707/livrables/menu.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project>/home/mbenahme/e707/livrables/default.gpr</vfs_project>
+      <vfs_file>/home/mbenahme/e707/livrables/registre.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 144" >
+      <vfs_project>/home/mbenahme/e707/livrables/default.gpr</vfs_project>
+      <vfs_file>/home/mbenahme/e707/livrables/menu.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 37" line=" 148" >
+      <vfs_project>/home/mbenahme/e707/livrables/default.gpr</vfs_project>
+      <vfs_file>/home/mbenahme/e707/livrables/menu.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 14" line=" 155" >
+      <vfs_project>/home/mbenahme/e707/livrables/default.gpr</vfs_project>
+      <vfs_file>/home/mbenahme/e707/livrables/menu.adb</vfs_file>
+    </file_marker>
+    <file_marker current="true" column=" 28" line=" 160" >
+      <vfs_project>/home/mbenahme/e707/livrables/default.gpr</vfs_project>
+      <vfs_file>/home/mbenahme/e707/livrables/menu.adb</vfs_file>
+    </file_marker>
+  </Project>
+</Locations>

@@ -1,0 +1,79 @@
+Section CalculPropositionnel.
+Require Import Naturelle.
+Variable phi psi chi E Y R : Prop.
+Variable A B : Prop.
+
+Theorem Thm00 : A /\ B -> B /\ A.
+I_imp HAetB.
+I_et.
+E_et_d A.
+Hyp HAetB.
+E_et_g B.
+Hyp HAetB.
+Qed.
+
+
+Theorem THm_1 : ((phi\/ psi) -> chi) -> (psi -> chi).
+I_imp H.
+I_imp H1.
+E_imp (phi \/ psi) .
+Hyp H.
+I_ou_d.
+Hyp H1.
+Qed.
+
+
+Theorem Thm_2 : phi -> ~~phi.
+I_imp H.
+I_non H1.
+I_antiT phi.
+Hyp H.
+Hyp H1.
+Qed.
+
+Theorem Thm_3 : (phi -> psi) -> (~psi -> ~phi).
+I_imp H1.
+I_imp H2.
+I_non H.
+I_antiT phi.
+Hyp H.
+I_non H3.
+I_antiT psi.
+E_imp phi.
+Hyp H1.
+Hyp H3.
+Hyp H2.
+Qed.
+
+
+Theorem Thm_4 : ~~phi -> phi.
+I_imp H.
+absurde H1.
+E_non (~phi).
+Hyp H1.
+Hyp H.
+Qed.
+
+Theorem Thm_5 : (~psi -> ~phi) -> (phi -> psi).
+I_imp H.
+I_imp H1.
+absurde H2.
+E_antiT.
+I_antiT phi.
+Hyp H1.
+E_imp (~psi).
+Hyp H.
+Hyp H2.
+Qed.
+
+
+Theorem Thm_6 : ((E -> (Y \/ R)) /\ (Y -> R)) -> (~R -> ~E).
+I_imp H1.
+I_imp H2.
+I_non H3.
+I_antiT E.
+Hyp H3.
+E_et_d (E -> Y \/ R).
+I_et.
+
+

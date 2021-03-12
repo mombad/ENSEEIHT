@@ -1,0 +1,42 @@
+Nom       : BEN AHMED DAHO
+Prénom    : Mohamed
+Groupe TP : N
+
+
+Consigne :  Ci-dessous, répondre à la place des « ... ».
+
+
+=====[ Temps ]==================================================================
+
+Temps consacré au projet pour rendre la V1 : 5h heures 00 minutes
+Temps consacré au projet pour rendre la V2 : 0 heures 30 minutes
+(Pour la V2 on ne tiendra pas du temps passé sur la V1)
+(Bien sûr, Les temps renseignés ici ne sont pas pris en compte dans la notation)
+
+
+=====[ Questions ]==============================================================
+
+Indiquer la relation UML entre Cercle et le Point centre du cercle.
+-------------------------------------------------------------------
+Si l'on construit un cercle à partir d'un point et que l'on modifie ce point, 
+les modifications ne se répercutent pas sur le centre du cercle. On a donc une 
+relation de composition.
+
+
+
+Comment est réalisée l'exigence E18 ?
+-------------------------------------
+    D'une part, les attributs de la classe Cercle sont privés ce qui implique 
+que les attributs ne peuvent pas être directement modifiés. D'autre part, 
+les méthodes get (getCentre, get Couleur retournant des poignées ne fournissent 
+pas les poignées sur des objets du cercle mais des copies de ces poignées ce 
+qui rend la modification par des opérations extérieures impossible.  
+
+
+
+=====[ Explications ]===========================================================
+
+(Facultatif) Donner ici les explications supplémentaires utiles à la
+compréhension du travail rendu.
+
+...

@@ -1,0 +1,196 @@
+import java.awt.Color;
+
+/**
+* Cercle modélise un cercle géométrique dans un plan équipé d'un repère cartésien.
+* Un Cercle peut être affiché, translaté,
+* modifié (rayon, couleur, diamètre).
+* On peut construire de différentes manières.
+*
+* @author Mohamed BEN AHMED DAHO <mohamed.benahmeddaho@etu.enseeiht.fr>
+*/
+public class Cercle implements Mesurable2D {
+	/**
+	 * Centre du cercle.
+	 */
+    private Point centre;
+    /**
+     * Rayon du cercle.
+     */
+    private double rayon;
+    /**
+     *Couleur du cercle.
+     */
+    private Color couleur;
+    /**
+     * Constante égale à pi.
+     */
+    public static final double PI = Math.PI;
+    /**
+     * Précision pour la comparaison sur les réels.
+     */
+    public static final double PRECISION = 0.001;
+
+
+// Construire un cercle
+
+    /** Construire un cercle à partir de son centre et de son rayon.
+     * @param vc centre du cercle <br>
+     * =====> Pre : vc != null
+     * @param vr rayon <br>
+     * =====> Pre : vr >0
+     */
+    public Cercle(Point vc, double vr) {
+    	assert (vc != null && vr > 0);
+        this.centre = new Point(vc.getX(), vc.getY());
+        this.rayon = vr;
+        this.couleur = Color.blue;
+    }
+
+
+    /** Construire un cercle à partir de deux points diamétralement opposés.
+     * @param a premier point <br>
+     * =====> Pre : a!=null
+     * @param b deuxième point <br>
+     * =====> Pre : b!=null et b!=a
+     */
+    public Cercle(Point a, Point b) {
+    	assert (a != null && b != null && (a.getX() != b.getX()
+    			|| a.getY() != b.getY()));
+        this.centre = new Point((a.getX() + b.getX()) / 2, (a.getY() + b.getY()) / 2);
+        this.rayon = a.distance(b) / 2;
+        this.couleur = Color.blue;
+    }
+
+
+    /** Construire un cercle à partir de deux points diamétralement opposés
+     * et de sa couleur.
+     * @param a premier point <br>
+     * =====> Pre : a!= null
+     * @param b deuxième point <br>
+     * =====>Pre : b!= null et b!=a
+     * @param ncouleur couleur du cercle <br>
+     * =====>Pre : ncouleur != null
+     */
+    public Cercle(Point a, Point b, Color ncouleur) {
+    	assert (a != null && b != null && (a.getX() != b.getX()
+    			|| a.getY() != b.getY()) && ncouleur != null);
+        this.centre = new Point((a.getX() + b.getX()) / 2, (a.getY() + b.getY()) / 2);
+        this.rayon = a.distance(b) / 2;
+        this.couleur = ncouleur;
+    }
+
+    /** Créer un cercle à partir du centre et d'un point du cercle.
+     * @param nc centre du cercle <br>
+     * =====> Pre : nc!=null
+     * @param p point du cercle <br>
+     * =====> Pre : p!=null et p!=nc
+     * @return cercle
+     */
+    public static Cercle creerCercle(Point nc, Point p) {
+    	assert (nc != null && p != null && (nc.getX() != p.getX()
+    			|| nc.getY() != p.getY()));
+    	Cercle c = new Cercle(nc, nc.distance(p));
+    	return c;
+    }
+
+
+// Modifier le cercle
+    /** Modifier le rayon du cercle.
+     * @param nr nouveau rayon <br>
+     * =====> Pre : nr>0
+     */
+    public void setRayon(double nr) {
+    	assert (nr > 0);
+    	this.rayon = nr;
+    }
+
+    /** Modifier le diamètre du cercle.
+     * @param nd nouveau diamètre <br>
+     * =====> Pre : nd>0
+     */
+    public void setDiametre(double nd) {
+    	assert (nd > 0);
+    	this.rayon = nd / 2;
+    }
+// Obtenir des informations sur le cercle
+
+    /** Obtenir le centre d'un cercle.
+	 * @return centre du cercle
+	 */
+    public Point getCentre() {
+    	Point pointc = new Point(this.centre.getX(), this.centre.getY());
+        return pointc;
+    }
+
+    /** Obtenir le rayon d'un cercle.
+	 * @return rayon du cercle
+	 */
+    public double getRayon() {
+        return this.rayon;
+    }
+
+    /** Obtenir le diamètre du cercle.
+	 * @return diamètre du cercle
+	 */
+    public double getDiametre() {
+        return 2 * this.rayon;
+    }
+    /** Obtenir le périmètre du cercle.
+	 * @return périmètre du cercle
+	 */
+    public double perimetre() {
+    	return 2 * PI * this.rayon;
+    }
+    /** Obtenir l'aire du cercle.
+	 * @return aire du cercle
+	 */
+    public double aire() {
+    	return PI * Math.pow(this.rayon, 2);
+    }
+// Autres méthodes
+    /** Translater un cercle suivant l'axe X ou l'axe Y.
+	 * @param dx translation suivant l'axe X
+     * @param dy translation suivant l'axe Y
+	 */
+    public void translater(double dx, double dy) {
+        this.centre.translater(dx, dy);
+    }
+    /** Tester si un point appartient à un cercle.
+	 * @param p point à tester <br>
+	 * =====> Pre : p!=null
+	 * @return Boolean
+	 */
+    public boolean contient(Point p) {
+    	assert (p != null);
+        return (this.centre.distance(p) <= this.rayon + PRECISION);
+    }
+	/** Afficher le cercle. */
+	public void afficher() {
+		System.out.print(this);
+	}
+
+	/** Méthode toString.
+	 * @return cercle en String
+	 */
+	public String toString() {
+		return "C" + this.rayon + "@" + this.getCentre();
+	}
+
+// Gestion de la couleur
+  /** Obtenir la couleur d'un cercle.
+	 * @return couleur du cercle
+	 */
+    public Color getCouleur() {
+    	Color nc = new Color(this.couleur.getRGB());
+        return nc;
+    }
+
+	/** Changer la couleur du point.
+	  * @param nouvelleCouleur nouvelle couleur <br>
+	  * =====> Pre : nouvelleCouleur!=null
+	  */
+	public void setCouleur(Color nouvelleCouleur) {
+		assert (nouvelleCouleur != null);
+		this.couleur = nouvelleCouleur;
+	}
+}

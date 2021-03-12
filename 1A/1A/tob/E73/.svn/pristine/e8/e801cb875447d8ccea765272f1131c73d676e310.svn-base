@@ -1,0 +1,49 @@
+package fenetre;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.*;
+
+public class ActionAmeliorer implements ActionListener{
+	
+
+	public void fenetre_ameliorer() {
+		int nb_or = 1000;
+		JFrame fenetre = new JFrame("RISK.exe");
+		Container contenu = fenetre.getContentPane();
+		contenu.setLayout(new BorderLayout());
+		fenetre.setTitle("Java-Risk");
+		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		fenetre.setLocationRelativeTo(null);
+		fenetre.setPreferredSize(new Dimension(350, 200));
+		
+		JPanel panel = new JPanel(new GridLayout(2,1));
+		contenu.add(panel,BorderLayout.CENTER);
+		JLabel text = new JLabel("Dépenser " +nb_or +" or pour améliorer vos troupes?");
+		JPanel boutons = new JPanel(new FlowLayout());
+		JButton oui = new JButton("OUI");
+		JButton non = new JButton("NON");
+		panel.add(text);
+		boutons.add(oui);
+		boutons.add(non);
+		panel.add(boutons);
+		contenu.add(panel);
+		non.addActionListener(new ActionRetour(fenetre));
+		
+		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	  	fenetre.pack();
+	  	fenetre.setVisible(true);
+	  	fenetre.toFront();
+	}
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		fenetre_ameliorer();
+		
+	}
+
+}

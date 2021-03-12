@@ -1,0 +1,139 @@
+package territoires;
+
+import java.util.ArrayList;
+
+import principal.Faction;
+import troupes.*;
+
+public class Territoire {
+	
+	/** Attributs */
+	protected String ID;
+    protected Faction faction;
+    protected ArrayList<Territoire> voisins;
+	protected ArrayList<Troupe> troupes;
+	
+	public Territoire() {
+		troupes = new ArrayList<Troupe>();
+		voisins = new ArrayList<Territoire>();
+	}
+	
+	public Territoire(String ID) {
+		this();
+		this.ID = ID;
+	}
+	
+    /** Initialiser le territoire */
+    public Territoire(Faction F, String ID, ArrayList<Territoire> V, ArrayList<Troupe> T) {
+    	this.faction = F;
+    	this.ID = ID;
+    	this.voisins = V;
+    	this.troupes = T;
+    }
+    
+    /** Obtenir la faction qui détient le territoire. */
+	public Faction getFaction() {
+        return this.faction;
+    }
+    
+	/** Modifier la faction qui détient le territoire.
+	 *
+	 * @param NouvelleFaction
+	 */
+	public void setFaction(Faction NouvelleFaction) {
+        this.faction = NouvelleFaction;
+    }
+	
+	/** Obtenir la liste des troupes sur le territoire. */
+	public ArrayList<Troupe> getTroupes() {
+        return this.troupes;
+    }
+	
+	/** Obtenir l'identifiant du territoire */
+	public String getID() {
+        return this.ID;
+    }
+    
+    /** Modifier l'identifiant du territoire */
+	public void setID(String newID) {
+        this.ID = newID;
+    }
+	
+	/** Obtenir la liste des territoires limitrophes */
+	public ArrayList<Territoire> getListeVoisins() {
+        return this.voisins;
+    }
+	
+	public void addVoisin(Territoire t) {
+		this.voisins.add(t);
+	}
+
+    /** Obtenir l'attaque totale du territoire. */
+    public double getAttaqueTotale() {
+	double somme = 0;
+    	for(Troupe elem : this.troupes){
+		somme = somme + elem.getATK();
+		} 
+	return somme;
+    }
+
+    /** Obtenir la défense totale du territoire. */
+    public double getDefenseTotale() {
+        double somme = 0;
+    	for(Troupe elem : this.troupes){
+		somme = somme + elem.getDEF();
+		}    
+	return somme;
+    }
+
+    /** Transférer des troupes vers un voisin. */
+    public void transfTRP(Territoire Voisin, Troupe TroupeTransfert) {
+		if (this.faction == Voisin.faction) {
+			if(this.voisins.contains(Voisin)) {
+				if (this.troupes.contains(TroupeTransfert)){
+					this.troupes.remove(TroupeTransfert);
+					Voisin.troupes.add(TroupeTransfert);
+				}
+				else {
+					System.err.println("Ces troupes ne sont pas présentes sur le territoire !");
+				}
+			}
+			else {
+				System.err.println("Ce territoire n'est pas voisin !");
+			}
+		}
+		else {
+			System.err.println("Ce territoire n'est pas possédé par votre faction !");
+		}
+     }
+
+    /** Attaquer un voisin. */
+    public void attaquer(Territoire Cible) {
+    	double ATK = this.getAttaqueTotale();
+    	double DEF = Cible.getDefenseTotale();
+    	if(this.voisins.contains(Cible)) {
+    		if((this.faction != Cible.faction) || !(this.faction.getAllies().contains(Cible.faction))) {
+    			if(ATK > DEF) {
+    				Cible.faction = this.faction;
+    			}
+    			else if(ATK < DEF) {
+    				System.out.println("L'attaque a échoué. Vous ne remportez pas ce territoire.");
+    			}
+    			else {
+    				System.out.println("Vos forces se valent. Vous battez en retraite sans remporter le territoire cible.");
+    			}
+    		}
+    		else {
+    			System.err.println("Vous essayez d'attaquer votre propre faction ou bien un de vos alliés !");
+    		}
+    	}
+    	else {
+    		System.err.println("Vous essayez d'attaquer un territoire non limitrophe !");
+    	}
+    }
+
+    
+    public String toString() {
+    	return this.ID + "Faction : " + this.faction;
+    }
+}

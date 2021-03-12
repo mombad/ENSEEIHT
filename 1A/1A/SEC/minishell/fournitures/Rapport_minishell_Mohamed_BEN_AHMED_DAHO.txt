@@ -1,0 +1,12 @@
+Question 2) 
+    Si l'on enlève le waitpid, on remarque que le père affiche avant que le fils n'ait fini.
+    Pour la commande ls, on voit que "Mohamed@Minishell:~" est affiché avant le contenu du répertoire.
+
+Question 6)
+    Je pense qu'il faut créer une liste de processus.
+    Pour rajouter les commandes internes demandées, il faudra les traiter de la même façon que cd et exit.
+    
+Remarques
+Pour le minishell, je me suis inspiré du TP1 pour structurer le code.
+J'ai créé une fonction execut pour traiter les commandes pour plus de lisibilité dans le main.
+J'ai aussi voulu afficher le chemin courant pour pouvoir montrer que la commande cd marchait bien.

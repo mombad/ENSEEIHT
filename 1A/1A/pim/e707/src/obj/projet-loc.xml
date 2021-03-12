@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<Locations >
+  <Project>
+    <vfs_file>/home/mbenahme/e707/src/projet.gpr</vfs_file>
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project />
+      <vfs_file>/home/mbenahme/tp/pr2/scenario_chainage.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 11" line=" 5" >
+      <vfs_project />
+      <vfs_file>/home/mbenahme/tp/pr2/scenario_chainage.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 11" line=" 5" >
+      <vfs_project />
+      <vfs_file>/home/mbenahme/tp/pr2/scenario_tableau.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 9" line=" 3" >
+      <vfs_project />
+      <vfs_file>/home/mbenahme/tp/pr2/nombre_moyen_tirages_tableau.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 9" line=" 3" >
+      <vfs_project />
+      <vfs_file>/home/mbenahme/tp/pr2/nombre_moyen_tirages_chainage.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project />
+      <vfs_file>/home/mbenahme/e707/src/projet.gpr</vfs_file>
+    </file_marker>
+    <file_marker column=" 26" line=" 4" >
+      <vfs_project />
+      <vfs_file>/home/mbenahme/e707/src/projet.gpr</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project />
+      <vfs_file>/home/mbenahme/e707/src/projet.gpr</vfs_file>
+    </file_marker>
+    <file_marker column=" 26" line=" 4" >
+      <vfs_project />
+      <vfs_file>/home/mbenahme/e707/src/projet.gpr</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project />
+      <vfs_file>/home/mbenahme/e707/src/arbre_binaire.adb</vfs_file>
+    </file_marker>
+    <file_marker current="true" column=" 1" line=" 1" >
+      <vfs_project />
+      <vfs_file>/home/mbenahme/e707/src/arbre_binaire.ads</vfs_file>
+    </file_marker>
+  </Project>
+</Locations>

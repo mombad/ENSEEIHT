@@ -1,0 +1,9 @@
+Pour la première itération, j'ai d'abord réalisé le diagramme UML issu de nos discussion,
+afin que tout le monde puisse avoir une vue d'ensemble de la structure du programme. Cela
+a permis de se séparer les tâches en limitant au maximum les traveaux de cohérence une
+fois les différentes classes réalisées.
+J'ai également travaillé sur la génération d'une carte du monde, instanciant les
+territoires dans une matrice et renseignant leurs voisins, puis attribuant les capitales
+aux factions en présence.
+Une fois toutes les classes réunies, j'ai également travaillé à la correction de détails
+de cohérence et organisé le code en packages permettant un accès plus intuitif.

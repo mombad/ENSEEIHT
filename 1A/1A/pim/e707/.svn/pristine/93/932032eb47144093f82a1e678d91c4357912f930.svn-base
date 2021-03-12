@@ -1,0 +1,206 @@
+with Ada.Text_IO;            use Ada.Text_IO;
+with Ada.Integer_Text_IO;    use Ada.Integer_Text_IO;
+with Ada.Unchecked_Deallocation;
+
+Package body arbre_binaire is
+
+
+    procedure Free is
+		new Ada.Unchecked_Deallocation (Object => T_Cellule_Arbre, Name => T_Arbre_Binaire);
+
+
+    Procedure Initialiser_Arbre (A: out T_Arbre_Binaire) is
+    begin
+        A := New T_Cellule_Arbre; --arbre n'est pas nulle à l'initialisation.
+    end Initialiser_Arbre;
+
+
+
+
+    procedure Ajouter(A: in out T_Arbre_Binaire; Cle_parent: in T_Cle; Cle_enfant: in T_Cle; choix: in Boolean) is
+            Noeud : T_Arbre_binaire;
+    begin
+        Noeud := new T_Cellule_Arbre;
+        Noeud.all.Cle := Cle_parent;
+
+        if Choix then    --dans initialiser on fait pointer vers une cellule non vide comme ça ça simplifie la condition d'arret de la récursivité
+
+            if A.all.CLe = Cle_enfant then  -- cle_enfant presente et l'arbre contient un seul element
+
+                if A.all.gauche.all.gauche = Null then
+                    A.all.gauche := new T_Cellule_Arbre'(Cle_parent, Null, Null);
+
+                else
+                    raise Est_Present_Cle;
+            end if;
+
+            elsif A = Null then  -- Cle_enfant absente
+                raise Est_Absent_Cle;
+
+            elsif inferieur(A.all.Cle , Cle_enfant) then
+                Ajouter(A.all.Droite,Cle_parent, Cle_enfant,choix);
+
+            elsif inferieur (Cle_enfant , A.all.Cle) then
+                Ajouter(A.all.gauche, Cle_parent, Cle_enfant, choix);
+
+            else -- {A est vide}
+                A.all.gauche := Noeud;
+            end if;
+
+
+        else
+
+            if A.all.CLe = Cle_enfant then
+
+                if A.all.gauche.all.droite = Null then
+                    A.all.gauche := new T_Cellule_Arbre'(Cle_parent, Null, Null);
+
+                else
+                    raise Est_Present_Cle;
+
+                end if;
+
+            elsif A = Null then
+                raise Est_Absent_Cle;
+
+            elsif inferieur (A.all.Cle , Cle_enfant) then
+                Ajouter(A.all.Droite,Cle_parent, Cle_enfant,choix);
+
+            elsif inferieur (Cle_enfant , A.all.Cle) then
+                Ajouter(A.all.gauche, Cle_parent, Cle_enfant, choix);
+
+            else --{ A est vide }
+                A.all.droite := Noeud;
+
+            end if;
+
+        end if;
+
+    end Ajouter;
+
+
+
+
+    procedure Afficher_Arbre (A : in T_Arbre_Binaire) is
+    begin
+        if A = Null then
+            Null;
+
+        else
+            Afficher_Arbre(A.all.gauche);
+            Put(" Cle : ");
+            Afficher(A.all.Cle);
+            New_Line;
+            Afficher_Arbre(A.all.droite);
+        end if;
+    end Afficher_Arbre;
+
+
+
+
+    procedure Supprimer_Noeud(A : in out T_Arbre_Binaire; Cle : in T_Cle) is
+        A_detruire : T_Arbre_Binaire;
+
+        procedure Decrocher_Min (A : in out T_Arbre_Binaire; Min : out T_Arbre_Binaire)
+	is
+        begin
+            if A.all.Gauche = Null then --  min trouvé
+                Min := A;
+                A := A.all.Gauche;
+
+            else
+                Decrocher_Min (A.all.Gauche, Min);
+
+            end if;
+        end Decrocher_Min;
+
+
+    begin
+        if A = Null then
+            raise Est_Absent_Cle;
+
+        elsif inferieur (A.all.Cle , Cle) then
+            Supprimer_Noeud(A.all.Droite, Cle);
+
+        elsif inferieur (Cle , A.all.Cle) then
+
+            Supprimer_Noeud(A.all.Gauche, Cle);
+
+        else -- { A.all.Cle = Cle }
+             -- Supprimer le noeud A
+            A_Detruire := A;
+
+            if A.all.Gauche = Null then
+                A := A.all.Droite;
+
+            elsif A.all.Droite = Null then
+                A := A.all.Gauche;
+
+            else
+                declare
+                    Min: T_Arbre_Binaire;
+                begin
+                    Decrocher_Min (A.all.Droite, Min);
+                    Min.all.Gauche := A.all.Gauche;
+                    Min.all.Droite := A.all.Droite;
+                    A := Min;
+                end;
+            end if;
+
+            Free (A_Detruire);
+
+        end if;
+    end Supprimer_Noeud;
+
+
+
+
+    function Est_Present(A: in T_Arbre_Binaire; Cle: in T_Cle) return Boolean is
+    begin
+        if A = Null then
+            return False;
+
+        elsif inferieur(A.all.CLe, Cle) then
+            return Est_present(A.all.Gauche, Cle);
+
+        elsif inferieur(Cle, A.all.Cle) then
+             return Est_present(A.all.droite, Cle);
+
+        else
+            return True;
+        end if;
+    end Est_present;
+
+
+
+
+    procedure Detruire(A: in out T_Arbre_Binaire) is
+    begin
+        if A = Null then
+            Null;
+
+        else
+            detruire(A.all.gauche);
+            detruire(A.all.droite);
+            Free(A);
+        end if;
+    end Detruire;
+
+
+
+
+end arbre_binaire;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,20 @@
+package src.principal;
+import src.troupes.*;
+
+public class CapaciteEgyptiens implements Capacite {
+    
+    //Attribut
+	Faction Spartiates;
+
+    public void getCAPACITE() {
+        System.out.println("Après activation de la capacité, les Spartiates augmentent leurs stats d'attaque de 50% pour la prochaine attaque.");
+    }
+    
+    public void useCAPACITE() {        
+        int inc = 0;        
+        for (Territoire elem : this.Spartiates.territoires) {
+            this.territoires[inc].troupes.majstats(50,0);
+            inc++;
+        }
+
+}

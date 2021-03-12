@@ -1,0 +1,86 @@
+with arbre_genealogique;
+use arbre_genealogique;
+with registre;
+use registre;
+with Ada.Text_IO;
+use Ada.Text_IO;
+with Ada.Integer_Text_IO;
+use Ada.Integer_Text_IO;
+
+procedure tests_arbre_genealogique is
+    A:T_Arbre_Gen;
+    R:T_Registre;
+    L:Liste;
+begin
+    Put("entrer info de 5");
+    Initialiser_Arbre_Gen(A,R,5);
+    pragma assert (Est_Present_Gen(A,5));
+    New_Line;
+    Put("entrer info de 10");
+
+    Ajouter_Arbre_Gen(A,R,10,5,True);
+    New_Line;
+    Put("entrer info de 3");
+    Ajouter_Arbre_Gen(A,R,3,5,False);
+    New_Line;
+    Put("entrer info de 4");
+    Ajouter_Arbre_Gen(A,R,4,3,False);
+    New_Line;
+    Put("entrer info de 101");
+    Ajouter_Arbre_Gen(A,R,101,10,True);
+    New_Line;
+    Put("entrer info de 100");
+    Ajouter_Arbre_Gen(A,R,100,10,False);
+
+    Afficher_Arbre_Gen(A,5);
+    Put("Liste un parent");
+    Afficher_Liste(Un_Parent(A));
+    New_Line;
+
+    Put("Liste 2 parents");
+    Afficher_Liste(Deux_Parents(A));
+    New_Line;
+
+    Put("Liste Aucun parent");
+    Afficher_Liste(Aucun_Parent(A));--marche pas
+    New_Line;
+
+    Put("Liste ancetres gen(1)");
+    Afficher_Liste(Ancetres_Gen(A,1));
+    New_Line;
+
+    Put("Nombre d'ancetres de 5 lui compris");
+    Put(Obtenir_nb_ancetres(A,5));
+    New_Line;
+    New_Line;
+    New_Line;
+    New_Line;
+    New_Line;
+
+    Afficher_Arbre_Gen(A,5);
+    New_Line;
+    New_Line;
+    New_Line;
+    New_Line;
+
+
+    Put(Obtenir_Nom(R,100));
+    initialiser_Liste(L);
+    --Obtenir_Tous_Les_Ancetres(A,L);
+    --Afficher_Liste(L);
+    --Put("Liste Homonyme");
+    Afficher_Liste(Homonyme(A,R,3,10));  --marche pas si il existe plusieurs personnes dont le nom n'est pas renseigné
+
+
+
+--    pragma assert (Obtenir_nb_ancetres(A,5) = 4);
+  --  Afficher_Liste(Obtenir_nb_ancetres_gen(A,5,2));
+
+    --Afficher_Arbre_Gen(A,2);
+    --Supprimer_Noeud_Gen(A,3);
+
+ --   pragma assert(Obtenir_nb_ancetres(A,5)=2);
+   -- Afficher_Liste(Obtenir_nb_ancetres_gen(A,5,2));
+
+    Detruire(A);
+end tests_arbre_genealogique;

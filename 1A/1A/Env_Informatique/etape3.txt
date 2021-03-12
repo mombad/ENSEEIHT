@@ -1,0 +1,10 @@
+tar -xvf tps_C.tar
+mkdir Sources
+mkdir Executables
+mv TP1/*.c TP2/*.c TP3/*.c Sources
+mv TP1/* TP2/* TP3/* Executables
+rmdir TP1 TP2 TP3
+cd ..
+mv TPS_C Progs_C
+tar -cvf progs_C.tar Progs_C
+

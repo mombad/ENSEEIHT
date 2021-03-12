@@ -1,0 +1,52 @@
+% Validation de http://cregut.svn.enseeiht.fr/2019/1sn/pim/tps/mbenahme/pr1
+% Run on 2019-10-13 21:30:56.524331
+
+# Respect des fichiers fournis
+
+* Fichier alea.adb non modifié... ok
+* Fichier alea.ads non modifié... ok
+* Fichier exemple_alea.adb non modifié... ok
+* Fichier multiplications.adb modifié... ok
+* Fichier LISEZ-MOI.txt modifié... ok
+* Running gnatclean... ok
+* Compilation de multiplications.adb... ok
+
+  | x86_64-linux-gnu-gcc-8 -c -gnatwa -gnata -g multiplications.adb
+  | x86_64-linux-gnu-gcc-8 -c -gnatwa -gnata -g alea.adb
+  | x86_64-linux-gnu-gnatbind-8 -x multiplications.ali
+  | x86_64-linux-gnu-gnatlink-8 multiplications.ali -g
+
+* ./multiplications < "5 1 2 3 4 1 6 7 8 9 1 n"... ok
+
+  | Veuillez entrer un nombre entre 1 et 10 
+  | Vous avez choisi la table de 5
+  | Combien font 5 x 3 ?
+  | Mauvaise rÃ©ponse ! La bonne rÃ©ponse est 15
+  | Combien font 5 x 1 ?
+  | Mauvaise rÃ©ponse ! La bonne rÃ©ponse est 5
+  | Combien font 5 x 1 ?
+  | Mauvaise rÃ©ponse ! La bonne rÃ©ponse est 5
+  | Combien font 5 x 8 ?
+  | Mauvaise rÃ©ponse ! La bonne rÃ©ponse est 40
+  | Combien font 5 x 9 ?
+  | Mauvaise rÃ©ponse ! La bonne rÃ©ponse est 45
+  | Combien font 5 x 3 ?
+  | Mauvaise rÃ©ponse ! La bonne rÃ©ponse est 15
+  | Combien font 5 x 2 ?
+  | Mauvaise rÃ©ponse ! La bonne rÃ©ponse est 10
+  | Combien font 5 x 1 ?
+  | Mauvaise rÃ©ponse ! La bonne rÃ©ponse est 5
+  | Combien font 5 x 10 ?
+  | Mauvaise rÃ©ponse ! La bonne rÃ©ponse est 50
+  | Combien font 5 x 10 ?
+  | Mauvaise rÃ©ponse ! La bonne rÃ©ponse est 50
+  | 
+  | Tout est faux. Volontaire ?
+  | 
+  | Voulez-vous retenter ?
+  | 
+  | Entrez n pour quitter
+  | Entrez n'importe quelle autre lettre pour retenter
+  | Au revoir
+
+* Running gnatclean... ok

@@ -1,0 +1,11 @@
+project Default is
+
+   for Main use ("arbre_binaire.adb", "arbre_binaire.ads", "arbre_genealogique.adb", "arbre_genealogique.ads", "foret.adb", "lien.ads", "menu.adb", "registre.adb", "registre.ads", "test_arbre_binaire.adb", "tester_foret.adb", 
+      "tests_arbre_genealogique.adb", "tests_registre.adb", "utiliser_arbre.adb");
+
+   package Compiler is
+      for Switches ("Ada") use ("-g", "-O2");
+   end Compiler;
+
+end Default;
+

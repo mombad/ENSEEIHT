@@ -1,0 +1,18 @@
+package src.principal;
+import src.troupes.*;
+
+public class CapaciteVikings implements Capacite {
+    
+    //Attributs
+	Faction Vikings;
+
+    public void getCAPACITE() {
+        System.out.println("Augmentation des stats d'attaque et de défense des troupes vikings augmentées de 15%");
+    }
+    
+    public void useCAPACITE() {        
+        for (Territoire elem : this.Vikings.territoires) {
+            this.territoires.troupes.majstats(15,15);
+        }
+
+}

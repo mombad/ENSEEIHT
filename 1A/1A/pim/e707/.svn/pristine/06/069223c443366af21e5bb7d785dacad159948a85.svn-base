@@ -1,0 +1,32 @@
+with registre;
+use registre;
+with Ada.Text_IO;
+use Ada.Text_IO;
+with Ada.Integer_Text_IO;
+use Ada.Integer_Text_IO;
+
+procedure tests_registre is 
+    R: T_Registre;
+begin
+    
+    Initialiser_R(R);
+    pragma assert (Est_Vide_R(R));
+    
+    Ajouter_R_individu(R,1);
+    Ajouter_R_info(R,1);
+    Ajouter_R_info(R,1);
+    Ajouter_R_info(R,1);
+    
+    
+        
+    Supprimer_R_information(R,1);
+    Afficher_R(R);
+    
+    Supprimer_R_individu(R,1);
+    pragma assert (Est_Vide_R(R));
+    
+end tests_registre;
+            
+        
+
+

@@ -1,0 +1,90 @@
+package fenetre;
+
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JSlider;
+
+import principal.Faction;
+import territoires.Territoire;
+import troupes.*;
+
+public class ActionConfirmerDeplacement implements ActionListener{
+	private Faction f;
+	private JlistListener listeChoix;
+	private JlistListenerVoisin listeCible;
+	private Container contenu;
+	private JFrame fenetre;
+	private JSlider off,def,eq;
+	
+	public ActionConfirmerDeplacement(Faction f, JlistListener listeChoix, 
+			JlistListenerVoisin listeCible,  Container contenu, JFrame fenetre,
+			JSlider off, JSlider def, JSlider eq) {
+		this.f = f;
+		this.listeChoix = listeChoix;
+		this.contenu = contenu;
+		this.fenetre = fenetre;
+		this.listeCible = listeCible;
+		this.fenetre = fenetre;
+		this.off = off;
+		this.def = def;
+		this.eq = eq;
+	}
+	
+	public void deplacer(Territoire selected, Territoire dest, int nbTroupes, int choix) {
+		int nbpossede;
+		if(choix == 0) {
+			nbpossede = selected.getNbTroupesOffensives();
+		}
+		else if (choix == 1) {
+			nbpossede = selected.getNbTroupesDefensives();
+		} else {
+			nbpossede = selected.getNbTroupesEquilibrees();
+		}
+		if(nbTroupes > selected.getNbTroupesOffensives()) {
+			System.out.println("Vous ne possédez pas autant de troupes");
+		}
+		while(nbTroupes != 0) {
+			if(selected.getTroupes().get(nbTroupes) instanceof Offensive) {
+				selected.transfTRP(dest, selected.getTroupes().get(nbTroupes));
+				nbTroupes--;
+			}
+		}
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Territoire selected = listeChoix.getTerritoire();
+		Territoire dest = listeCible.getTerritoire();
+		int nbOff = off.getValue();
+		int nbDef = def.getValue();
+		int nbEq = eq.getValue();
+		// TODO Auto-generated method stub
+		System.out.println(selected.getTroupes().size());
+		for(int i = 0; i < selected.getTroupes().size(); i++) {
+			if(selected.getTroupes().get(i) instanceof Offensive && nbOff > 0) {
+				selected.transfTRP(dest, selected.getTroupes().get(i));
+				System.out.println(selected.getTroupes().get(i));
+				nbOff--;
+			}
+		}
+		for(int i = 0; i < selected.getTroupes().size(); i++) {
+			if(selected.getTroupes().get(i) instanceof Defensive && nbDef > 0) {
+				selected.transfTRP(dest, selected.getTroupes().get(i));
+				System.out.println(selected.getTroupes().get(i));
+				nbDef--;
+			}
+		}
+		for(int i = 0; i < selected.getTroupes().size(); i++) {
+			if(selected.getTroupes().get(i) instanceof Equilibre && nbEq > 0) {
+				selected.transfTRP(dest, selected.getTroupes().get(i));
+				System.out.println(selected.getTroupes().get(i));
+				nbEq--;
+			}
+		}
+		listeChoix.add_label(contenu, listeChoix.getTerritoire());
+		fenetre.dispose();
+	}
+}

@@ -1,0 +1,109 @@
+% Mini-projet  : Ensemble
+% NOM & Prénom : BEN AHMED DAHO Mohamed
+% Groupe       : N
+
+
+**Consigne :** Dans ce fichier, il faut répondre à la place des "..." et sur
+les lignes qui les suivent.  Le texte déjà écrit doit être conservé !
+
+**Remarque :** Ce fichier utiliser la syntaxe Markdown.  On peut en engendrer
+une version pdf en faisant :
+
+	pandoc LISEZ-MOI.txt -o LISEZ-MOI.pdf
+
+
+# Temps passé sur le projet
+
+Ces informations de temps sont demandées à titre indicatif et ne sont pas
+prises en compte dans la notation du projet.
+
+Toutes les durées sont à saisir en heures.  Par exemple, si vous avez passé
+1h45, il faudra indiquer 1.75.  Si vous avez passé 2h30, il faudra indiquer
+2.5.
+
+* Temps passé sur la version Tableau    (en h) : 5h
+* Temps passé sur la version Chainage   (en h) : 5h
+* Temps passé à compléter LISEZ-MOI.txt (en h) : 2h
+
+
+# Questions
+
+**Question 1 :**
+Quels sous-programmes avez-vous définis dans les corps des modules sans les
+spécifier dans la spécification ?  Expliquez pourquoi.
+
+**Réponse :**
+
+Il n'y a que la procédure Free qui n'apparait que dans le corps et pas dans la spécification car on en a besoin pour certains sous programmes mais l'utilisateur n'en a pas besoin directement. 
+
+
+**Question 2 :**
+Y a-t-il des sous-programmes dont les contrats (préconditions ou
+postconditions) changent entre Ensembles_Tableau et Ensembles_Chaine ?
+Lesquels ?
+
+**Réponse :**
+
+Au niveau des préconditions pour la procédure Ajouter, la précondition sur la capacité du tableau n'existe plus dans la version chainée.
+
+
+**Question 3 :**
+Le type Ensemble doit être déclaré comme très privé dans Ensembles_Chaine.
+Expliquez pourquoi il est important ici de définir le type Ensemble comme
+très privé (et pas seulement privé).  On commecera par rappeler la
+différence entre "private" (privé) et "limited private" (très privé).
+
+**Réponse :**
+
+Un type très privé, contrairement au type privé, empêche certaines opérations notamment l'égalité. Dans le cas de liste chaînée, l'utilisateur pourrait avoir envie de créer une copie 
+d'un ensemble en affectant à une variable de type T_Ensemble l'ensemble à copier. Or, puisqu'il s'agit de pointeurs, ce n'est pas l'ensemble qui est copié mais le pointeur qui pointe vers cet ensemble et de ce fait si l'utilsateur modifie la copie l'ensemble initial sera aussi modifié. Il faut donc dans le cas de listes chaînées définir le type T_Ensemble comme étant très privé.
+
+
+**Question 4 :**
+Même pour Ensemble_Tableau, le type doit être très privé.  Pourquoi ?
+
+**Réponse :**
+
+Cela permet de limiter les opérations possibles sur l'ensemble mais surtout d'empêcher le test d'égalité. En effet, deux ensembles peuvent être égaux mathématiquement et ne pas être représentés de la même façon dans le module car l'ordre des éléments a une importance dans pour un tableau mais pas pour un ensemble. Le test d'égalité pourra donc être faux si les ensembles contiennent les mêmes éléments dans un ordre différent alors qu'il s'agit des mêmes ensembles. Le type doit donc être très privé.
+
+
+**Question 5 :**
+Dans Ensemble_Tableau, est-il possible d'implanter le sous-programme qui
+supprime un élément en temps constant concernant le nombre d'affectations
+des éléments de l'ensemble (et linéaire sur le nombre de comparaison) ? Si
+oui, comment ?
+
+**Réponse :**
+
+On peut le faire de la manière suivante :
+for i in 1..E.Taille loop;
+    if E.Tab(i) = element then
+        E.Tab(i):=E.Tab(E.Taille);
+        E.Taille:=E.Taille-1;
+        end if;
+end loop;
+
+On effectue E.Taille comparaisons (linéaire) et seulement 2 affectations (temps constant).
+        
+
+
+**Question 6 :**
+Est-ce que les deux implantations envisagées des ensembles (Tableau ou
+Chainage) sont efficaces ?
+
+**Réponse :**
+
+La version tableau n'est pas efficace au niveau de la mémoire car on réserve de la mémoire même pour les cases innocupées. Cependant, on peut noter que les procédures Ajouter et Supprimer sont beaucoup plus efficaces que pour la version chaînage. La procédure Ajouter de la version chaînage nécessite plusieurs comparaisons et aussi de parcourir tout l'ensemble alors que celle de la version tableau se fait en temps constant. La procédure Supprimer de la version tableau nécessite moins d'affectations que celle de la version chaînage. 
+
+
+
+# Difficultés
+
+Voici les difficultés rencontrées et les solutions apportées.
+
+Valgrind m'indiquait qu'il y avait 16 "leaked bytes" au niveau de la fonction Ajouter lorsque je testais le scénario de la version chaînage. J'ai du revoir plusieurs fois la manière d'implémanter cette fonction. J'ai donc décidé d'ajouter la cellule à la fin du chaînage ce qui m'a permis de supprimer cette erreur.
+
+
+# Remarques diverses
+
+...

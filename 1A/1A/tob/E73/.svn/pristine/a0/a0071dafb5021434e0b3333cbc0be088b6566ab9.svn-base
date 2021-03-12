@@ -1,0 +1,12 @@
+package src.principal;
+
+public interface Capacite {
+
+	/* Obtenir une description de la capacité */
+	void getCAPACITE();
+
+	/* Capacité active : déclenche le temps de rechargement de cette capacité puis possibilité de l'activer */
+    /* Capacité passive : déclenche cette capacité de façon permanente */
+	void useCAPACITE();
+
+}

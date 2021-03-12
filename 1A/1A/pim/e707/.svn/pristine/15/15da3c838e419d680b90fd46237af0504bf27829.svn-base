@@ -1,0 +1,68 @@
+With lien;
+use lien;
+Package Registre is
+    subtype NSTR is String(1..40);
+
+    type T_Info is limited private;
+
+    Type T_Registre is limited private;
+
+    -- Initialiser le registre.
+    procedure Initialiser_R(R: out T_Registre);
+
+    --Ajouter une information.
+    procedure Ajouter_R_info(R: in out T_Registre;Cle: in Integer);
+    -- Exception Est_Absent_Cle si la cle existe déjà.
+
+    --Ajouter un individu.
+    procedure Ajouter_R_individu(R: in out T_Registre;Cle: in Integer);
+    --Exception Est_Present_Cle si l'individu existe déja.
+
+    --Supprimer un individu.
+    procedure Supprimer_R_individu(R:in out T_Registre; Cle:in Integer);
+    -- Exception Est_Absent_Cle si la clé n'existe pas.
+
+    --Supprimer une information.
+    procedure Supprimer_R_information(R:in out T_Registre; Cle:in Integer);
+    -- Exception Est_Absent_Cle si la clé n'existe pas.
+
+    procedure Modifier_R(R:in out T_Registre; Cle:in Integer);
+    -- Exception Est_Absent_Cle si la clé n'existe pas.
+
+    --Vérifier si le registre est vide
+    function Est_Vide_R(R:in T_Registre) return Boolean;
+
+    procedure Afficher_R(R:in T_Registre);
+
+    function Obtenir_Nom(R:in T_Registre; Cle:in Integer) return NSTR;
+
+    procedure Afficher_info(R:in T_Registre; Cle:in Integer);
+
+    procedure Detruire(R:in out T_Registre);
+
+    function Est_Present_R(R:in T_Registre; Cle:in Integer) return Boolean;
+
+
+private
+
+    Type T_Cellule_Registre;
+    Type T_Registre is access T_Cellule_Registre;
+    Type T_Cellule_Registre is
+        record
+            Cle: Integer;
+            Information : T_Info;
+            suivant: T_Registre;
+        end record;
+
+  type liste_cle;
+
+type T_Info is access liste_cle;
+    type liste_cle is
+
+        record
+            info: NSTR;
+            infosuivante : T_Info;
+        end record;
+end Registre;
+
+

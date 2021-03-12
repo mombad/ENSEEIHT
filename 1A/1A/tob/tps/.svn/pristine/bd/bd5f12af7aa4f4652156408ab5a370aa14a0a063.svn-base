@@ -1,0 +1,30 @@
+package allumettes;
+
+public class JeuReel implements Jeu {
+
+	private int nombreAllumettes;
+
+	public JeuReel(int nombreInitialAllumettes) {
+		this.nombreAllumettes = nombreInitialAllumettes;
+	}
+	
+	@Override
+	public int getNombreAllumettes() {		
+		return nombreAllumettes;
+	}
+
+	@Override
+	public void retirer(int nbPrises) throws CoupInvalideException {
+		if (nombreAllumettes-nbPrises<0) {
+			throw new CoupInvalideException(nbPrises,"Le nombre entré est supérieur au nombre d'allumettes restantes");
+		}
+		if (nbPrises>Jeu.PRISE_MAX) {
+			throw new CoupInvalideException(nbPrises,"Le nombre entré dépasse le nombre maximal d'allumettes prises autorisé en un coup");
+		}
+		if (nbPrises<=0) {
+			throw new CoupInvalideException(nbPrises,"Le nombre entré doit être supérieur à 0");
+		}
+		nombreAllumettes= nombreAllumettes-nbPrises;
+	}
+
+}

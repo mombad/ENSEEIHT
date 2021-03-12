@@ -1,0 +1,18 @@
+package src.principal;
+
+public class CapaciteMongols implements Capacite {
+    
+    //Attribut
+    Faction Mongols;
+
+	public void getCAPACITE() {
+        System.out.println("Vos soldats s'enragent et assurent la victoire pour votre prochaine attaque.");
+    }
+    
+    public void useCAPACITE() {
+        inc = 0;
+        for (Territoire elem : this.Mongols.territoires) {
+            this.Mongols.territoires[inc].troupes.majstats(10000,10000);
+            inc++;
+        }
+}

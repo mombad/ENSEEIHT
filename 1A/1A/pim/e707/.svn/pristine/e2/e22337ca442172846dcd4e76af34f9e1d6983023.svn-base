@@ -1,0 +1,672 @@
+--Implantation du module registre
+with Ada.Unchecked_Deallocation;
+with Ada.Text_IO;
+use Ada.Text_IO;
+with Ada.Integer_Text_IO;
+use Ada.Integer_Text_IO;
+
+package body Registre is
+
+    procedure Free_Registre is
+            new Ada.Unchecked_Deallocation (Object => T_Cellule_Registre, Name => T_Registre);
+
+
+    procedure Free_Info is
+            new Ada.Unchecked_Deallocation (Object => T_Cellule_Info, Name => T_Info);
+
+
+    procedure Initialiser_R(R : out T_Registre) is
+    begin
+        R:=Null;
+    end Initialiser_R;
+
+
+
+
+    procedure Detruire_R(R:in out T_Registre) is
+    begin
+        if R/=null then
+            Detruire_Information(R.all.Information);
+            Detruire_R(R.all.suivant);
+            Free_Registre(R);
+
+        else
+            null;
+        end if;
+    end Detruire_R;
+
+
+
+
+    procedure Detruire_Information(I:in out T_Info) is
+    begin
+        if I/=null then
+            Detruire_Information(I.all.infosuivante);
+            Free_Info(I);
+
+        else
+            null;
+        end if;
+    end Detruire_Information;
+
+
+
+
+    function Est_Vide_R(R:T_Registre) return Boolean is
+    begin
+        return R=Null;
+    end Est_Vide_R;
+
+
+
+
+    function Est_Present_R(R:in T_Registre;Cle: in Integer) return Boolean is
+    begin
+        if R=null then
+            return False;
+
+        else
+            if R.all.Cle=Cle then
+                return True;
+
+            else
+                return Est_Present_R(R.all.suivant,Cle);
+            end if;
+        end if;
+    end Est_Present_R;
+
+
+
+
+    procedure Ajouter_R_individu(R: in out T_Registre;Cle: in Integer) is
+        R0: T_Registre;
+    begin
+        if Est_Vide_R(R) then
+            R:=new T_Cellule_Registre;
+            R.all.Cle:=Cle;
+
+        else
+            if Est_Present_R(R,Cle) then
+                raise Est_Present_Cle;
+
+            else
+                R0:=R;
+
+                while R0.all.suivant/=null loop
+                    R0:=R0.all.suivant;
+                end loop;
+
+                R0.all.suivant:= new T_Cellule_Registre;
+                R0.all.suivant.Cle:=Cle;
+                R0:=null;
+                Detruire_R(R0);
+            end if;
+        end if;
+    end Ajouter_R_individu;
+
+
+
+
+    procedure Ajouter_R_info(R: in out T_Registre; Cle: in Integer) is
+        R0:T_Registre;
+        I0:T_Info;
+        Infostr: NSTR;
+        Longueur:Natural;
+    begin
+        if Est_Present_R(R,Cle) then
+
+            Put("Veuillez entrez une information. Par exemple 'Age : 20 ans'   ");
+            Get_Line(Infostr,Longueur);
+
+            if Longueur<45 then
+                for i in (Longueur+1)..45 loop
+                    Infostr(i):=' ';
+                end loop;
+
+            else
+                null;
+            end if;
+            R0:=R;
+
+            --recherche de la cellule correspondant à la clé
+            while R0.all.Cle/=Cle loop
+                R0:=R0.all.suivant;
+            end loop;
+
+            --si aucune information n'est renseignée
+            if R0.all.Information=null then
+                I0:= new T_Cellule_Info;
+                I0.all.info:=Infostr;
+                R0.all.Information:=I0;
+
+            --s'il y a déja des informations renseignées
+            else
+                I0:=R0.all.Information;
+
+                while I0.all.infosuivante/=null loop
+                    I0:=I0.all.infosuivante;
+                end loop;
+
+                I0.all.infosuivante:= new T_Cellule_Info;
+                I0.all.infosuivante.all.info:= Infostr;
+                I0:=null;
+                Detruire_Information(I0);
+            end if;
+
+        else
+            raise Est_Absent_Cle;
+        end if;
+    end Ajouter_R_info;
+
+
+
+
+    procedure Supprimer_R_individu(R:in out T_Registre; Cle:in Integer) is
+        R0: T_Registre;
+    begin
+        if Est_Present_R(R,Cle) then
+
+            if R.all.Cle=Cle then
+                R0:=R;
+                R:=R.all.suivant;
+                Detruire_Information(R0.all.Information);
+                Free_Registre(R0);
+
+            else
+
+                if R.all.suivant.Cle=Cle then
+                    R0:=R.all.suivant;
+                    R.all.suivant:=R.all.suivant.all.suivant;
+                    Detruire_Information(R0.all.Information);
+                    Free_Registre(R0);
+
+                else
+                    Supprimer_R_individu(R.all.suivant,Cle);
+                end if;
+
+            end if;
+
+
+        else
+            raise Est_Absent_Cle;
+        end if;
+    end Supprimer_R_individu;
+
+
+
+
+    procedure Supprimer_R_information(R:in out T_Registre; Cle:in Integer) is
+        R0:T_Registre;
+        I0:T_Info;
+        I1:T_Info;
+        choix:Integer;
+    begin
+        if Est_Present_R(R,Cle) then
+            --Recherche de la sous-liste chaînée correspondant à la clé donnée
+            R0:=R;
+
+            while R0.all.Cle/=Cle loop
+                if R0=null then
+                    raise Est_Absent_Cle;
+                else
+                    R0:=R0.all.suivant;
+                end if;
+            end loop;
+
+
+            Afficher_info(R,Cle);
+            Put("Quelle information voulez-vous supprimer ?");
+            New_Line;
+            Put("Veuillez entrer le numéro correspondant à celle-ci (0 pour quitter)");
+            New_Line;
+            Get(choix);
+
+            if choix=0 then
+                null;
+
+            else
+
+                if choix > Nb_info(R,Cle) then
+                    Put("Aucune information ne correspond à ce numéro. Echec de la suppression.");
+
+                else
+                    I0:=R0.all.Information;
+
+                    if choix=1 then
+                        R0.all.Information:=R0.all.Information.all.infosuivante;
+                        Free_Info(I0);
+
+
+                    else
+
+
+                        if choix=2 then
+                            null;
+
+                        else
+                            for i in 1..(choix-2) loop
+                                I0:=I0.all.infosuivante;
+                            end loop;
+                        end if;
+
+
+                        I1:=I0.all.infosuivante;
+                        if I1.all.infosuivante/=null then
+                            I0.all.infosuivante:=I0.all.infosuivante.all.infosuivante;
+                            Free_Info(I1);
+
+                        else
+                            Free_Info(I1);
+                            I0.all.infosuivante:=null;
+                        end if;
+
+
+                    end if;
+
+                end if;
+
+            end if;
+
+        else
+            raise Est_Absent_Cle;
+        end if;
+    end Supprimer_R_information;
+
+
+
+
+    procedure Afficher_R(R:in T_Registre) is
+    begin
+        if R=null then
+            null;
+
+        else
+            Put(R.all.Cle);
+            Put(" : " );
+            New_Line;
+            Afficher_info(R,R.all.Cle);
+            Afficher_R(R.all.suivant);
+        end if;
+    end Afficher_R;
+
+
+
+
+    procedure Afficher_info(R:in T_Registre;Cle:in Integer) is
+        R0:T_Registre;
+        I0:T_Info;
+    begin
+        R0:=R;
+
+        while R0.all.Cle/=Cle loop
+            R0:=R0.all.suivant;
+        end loop;
+
+        I0:=R0.all.Information;
+
+        for i in 1..Nb_info(R,Cle) loop
+            Put(I0.all.info);
+            New_Line;
+            I0:=I0.all.infosuivante;
+        end loop;
+    end Afficher_info;
+
+
+
+
+    function Nb_info(R:in T_Registre;Cle:in Integer) return Integer is
+        Nb:Integer;
+        R0:T_Registre;
+        I0:T_Info;
+    begin
+        R0:=R;
+
+        while R0.all.Cle/=Cle loop
+            R0:=R0.all.suivant;
+        end loop;
+
+        Nb:=0;
+        I0:=R0.all.Information;
+
+        while I0/=null loop
+            Nb:=Nb + 1;
+            I0:=I0.all.infosuivante;
+        end loop;
+
+        return Nb;
+    end Nb_info;
+
+
+
+
+    function Obtenir_Nom(R:in T_Registre; Cle:in Integer) return NSTR is
+        R0:T_Registre;
+        I0:T_Info;
+        NOM_individu:NSTR;
+        Booleen : Boolean;
+    begin
+        if Est_Present_R(R,Cle) then
+            R0:=R;
+
+            while R0.all.Cle/=Cle loop
+                R0:=R0.all.suivant;
+            end loop;
+
+            I0:=R0.all.Information;
+
+
+            Booleen:=False;
+
+            while Booleen=False and I0/=null loop
+                if I0.all.info(1)='N' or I0.all.info(1)='n' then
+                    if I0.all.info(2)='O' or I0.all.info(2)='o' then
+                        if I0.all.info(3)='M' or I0.all.info(3)='m' then
+                            Booleen:=True;
+                        else
+                            null;
+                        end if;
+                    else
+                        null;
+                    end if;
+                else
+                    null;
+                end if;
+
+                if Booleen=True then
+                    null;
+                else
+                    I0:=I0.all.infosuivante;
+                end if;
+            end loop;
+
+
+            if Booleen=True then
+                NOM_individu:=I0.all.info;
+            else
+                NOM_individu:="Le nom de cet individu n'est pas renseigné  ";
+            end if;
+
+            return NOM_individu;
+
+        else
+            raise Est_Absent_Cle;
+        end if;
+   end Obtenir_Nom;
+
+
+
+
+   function suivant(R:in T_registre) return T_registre is
+   begin
+      return R.all.suivant;
+   end suivant;
+
+
+
+
+   function Obtenir_Cle_R(R: in T_Registre) return Integer is
+   begin
+      return R.all.Cle;
+   end Obtenir_Cle_R;
+
+
+
+
+   function est_egal_null_R(R: in T_Registre) return boolean is
+   begin
+      return R = Null;
+   end est_egal_null_R;
+
+
+
+
+   procedure egal_R(R1: out T_Registre; R2: in T_Registre) is
+   begin
+      R1 := R2;
+   end egal_R;
+
+   function Obtenir_conjoint(R:in T_Registre; Cle:in Integer) return NSTR is
+        R0:T_Registre;
+        I0:T_Info;
+        Conjoint_individu:NSTR;
+        Booleen : Boolean;
+    begin
+        if Est_Present_R(R,Cle) then
+            R0:=R;
+
+            while R0.all.Cle/=Cle loop
+                R0:=R0.all.suivant;
+            end loop;
+
+            I0:=R0.all.Information;
+
+            Booleen:=False;
+
+
+
+         while Booleen=False and I0/=null loop
+
+            if I0.all.info(1)='C' or I0.all.info(1)='c' then
+
+               if I0.all.info(2)='O' or I0.all.info(2)='o' then
+
+                  if I0.all.info(3)='N' or I0.all.info(3)='n' then
+
+                     if I0.all.info(4)='J' or I0.all.info(4)='j' then
+
+                        if I0.all.info(5)='O' or I0.all.info(5)='o' then
+
+                           if I0.all.info(6)='I' or I0.all.info(6)='i' then
+
+                              if I0.all.info(7)='N' or I0.all.info(7)='n' then
+
+                                 if I0.all.info(8)='T' or I0.all.info(8)='t' then
+
+                                    Booleen:=True;
+
+                                 else
+
+                                    null;
+
+                                 end if;
+
+                              else
+
+                                 null;
+
+                              end if;
+
+
+                           else
+
+                              null;
+
+                           end if;
+                        else
+                           null;
+                        end if;
+                     else
+                        null;
+                     end if;
+                  else
+                     null;
+                  end if;
+               else
+                  null;
+               end if;
+            else
+               null;
+            end if;
+
+
+
+                if Booleen=True then
+                    null;
+                else
+                    I0:=I0.all.infosuivante;
+                end if;
+            end loop;
+
+
+            if Booleen=True then
+                Conjoint_individu:=I0.all.info;
+            else
+                Conjoint_individu:="Le nom de cet individu n'est pas renseigné  ";
+            end if;
+            return Conjoint_individu;
+        else
+            raise Est_Absent_Cle;
+        end if;
+   end Obtenir_conjoint;
+   function Obtenir_frere(R:in T_Registre; Cle:in Integer) return NSTR is
+        R0:T_Registre;
+        I0:T_Info;
+        frere_individu:NSTR;
+        Booleen : Boolean;
+    begin
+        if Est_Present_R(R,Cle) then
+            R0:=R;
+
+            while R0.all.Cle/=Cle loop
+                R0:=R0.all.suivant;
+            end loop;
+
+            I0:=R0.all.Information;
+
+            Booleen:=False;
+
+
+
+         while Booleen=False and I0/=null loop
+
+            if I0.all.info(1)='F' or I0.all.info(1)='f' then
+
+               if I0.all.info(2)='R' or I0.all.info(2)='r' then
+
+                  if I0.all.info(3)='E' or I0.all.info(3)='e' then
+
+                     if I0.all.info(4)='R' or I0.all.info(4)='r' then
+
+                        if I0.all.info(5)='E' or I0.all.info(5)='e' then
+
+
+                                    Booleen:=True;
+
+                        else
+
+
+                           null;
+
+
+                        end if;
+
+
+                     else
+
+
+                        null;
+
+
+                     end if;
+
+
+
+                  else
+
+
+                     null;
+
+
+                  end if;
+
+               else
+
+                  null;
+
+               end if;
+
+            else
+
+               null;
+
+            end if;
+
+
+
+
+
+                if Booleen=True then
+                    null;
+                else
+                    I0:=I0.all.infosuivante;
+                end if;
+            end loop;
+
+
+            if Booleen=True then
+                frere_individu:=I0.all.info;
+            else
+                frere_individu:="Le nom de cet individu n'est pas renseigné  ";
+            end if;
+            return frere_individu;
+        else
+            raise Est_Absent_Cle;
+        end if;
+   end Obtenir_frere;
+
+ procedure Ajouter_R_info_foret(R: in out T_Registre; Cle: in Integer; infostr: in out NSTR) is
+        R0:T_Registre;
+        I0:T_Info;
+        Longueur:Natural;
+    begin
+      if Est_Present_R(R,Cle) then
+            --longueur := length(infostr);
+
+            if Longueur<45 then
+                for i in (Longueur+1)..45 loop
+                    Infostr(i):=' ';
+                end loop;
+
+            else
+                null;
+            end if;
+            R0:=R;
+
+            --recherche de la cellule correspondant à la clé
+            while R0.all.Cle/=Cle loop
+                R0:=R0.all.suivant;
+            end loop;
+
+            --si aucune information n'est renseignée
+            if R0.all.Information=null then
+                I0:= new T_Cellule_Info;
+                I0.all.info:=Infostr;
+                R0.all.Information:=I0;
+
+            --s'il y a déja des informations renseignées
+            else
+                I0:=R0.all.Information;
+
+                while I0.all.infosuivante/=null loop
+                    I0:=I0.all.infosuivante;
+                end loop;
+
+                I0.all.infosuivante:= new T_Cellule_Info;
+                I0.all.infosuivante.all.info:= Infostr;
+                I0:=null;
+                Detruire_Information(I0);
+            end if;
+
+        else
+            raise Est_Absent_Cle;
+        end if;
+    end Ajouter_R_info_foret;
+
+
+
+
+
+
+
+
+end Registre;

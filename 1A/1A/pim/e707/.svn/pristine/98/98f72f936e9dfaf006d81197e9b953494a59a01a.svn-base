@@ -1,0 +1,38 @@
+Package Registre is
+
+    type Pointeur is limited private;
+
+    Type T_Registre is limited private;
+
+    procedure Initialiser_R(R: out T_Registre);
+
+    procedure Ajouter_R(R: in out T_Registre;Cle: in Integer; I: in Pointeur);
+
+    procedure Supprimer_R(R:in out T_Registre; Cle:in Integer);
+
+    procedure Modifier_R(R:in out T_Registre; Cle:in Integer; I: in Pointeur);
+
+private
+
+    Type T_Cellule_Registre;
+    Type T_Registre is access T_Cellule_Registre;
+    Type T_Cellule_Registre is
+        record
+            Cle: Integer;
+            Information : Pointeur;
+            suivant: T_Registre;
+        end record;
+
+  type liste_cle;
+
+type Pointeur is access liste_cle;
+type NSTR is array(1..40) of Character;
+    type liste_cle is
+
+        record
+            info: NSTR;
+            infosuivante1 : Pointeur;
+        end record;
+end Registre;
+
+

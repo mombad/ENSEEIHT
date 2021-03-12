@@ -1,0 +1,446 @@
+with Ada.Text_IO;            use Ada.Text_IO;
+with Ada.Integer_Text_IO;    use Ada.Integer_Text_IO;
+with Ada.Unchecked_Deallocation;
+with registre;
+with lien; use lien;
+with piles;
+
+
+
+
+
+package body Arbre_genealogique is
+
+    Package Piles_Arbre_gen is
+     new Piles(T_Element => T_Arbre_Gen);
+   use Piles_Arbre_gen;
+
+   procedure afficher(Cle: in integer;esp : in integer) is
+   begin
+      put(Cle,esp);
+   end afficher;
+
+  procedure afficher_arbre is new lien.Afficher_Arbre(afficher);
+
+ --procedure afficher_arbre_gen is new Arbre_genealogique.Afficher_Arbre_gen(afficher_arbre);
+
+
+    procedure Initialiser_Arbre_Gen(A : out T_Arbre_Gen;R: out T_Registre;Cle: in Integer) is
+    begin
+        Initialiser_Arbre(A,Cle);
+        Initialiser_R (R);
+        Ajouter_R_individu(R,Cle);
+        Ajouter_R_info(R,Cle);
+
+    end Initialiser_Arbre_Gen;
+
+
+
+
+
+    procedure Ajouter_Arbre_Gen(A: in out T_Arbre_Gen;R: in out T_Registre; Cle_parent: in Integer ;Cle_enfant: in Integer; choix: in Boolean) is
+    begin
+        Ajouter(A,Cle_parent,Cle_enfant,Choix);
+        Ajouter_R_individu(R,Cle_parent);
+        Ajouter_R_info(R,Cle_parent);
+    end Ajouter_Arbre_Gen;
+
+
+
+
+
+
+
+     function Obtenir_nb_ancetres(A: in  T_Arbre_Gen; Cle: in Integer) return Integer is
+        A1 : T_Arbre_Gen;
+        P: T_Pile;
+        A2 : T_Arbre_Gen;
+        nb : Integer;
+    begin
+
+        chercher_noeud(A,A1,Cle);
+        egal(A2,A1);
+        initialiser(P);
+        empiler(P,A1);
+        nb := 1;
+      while not est_vide(P) loop
+         A2 := sommet(P);
+         depiler(P);
+         if not est_egal_null(droite(A2)) then
+           empiler(P,droite(A2));
+           nb:= nb+1;
+         else
+            null;
+         end if;
+
+         if not est_egal_null(gauche(A2)) then
+           empiler(P,gauche(A2));
+           nb:=nb+1;
+         else
+            null;
+         end if;
+      end loop;
+      return nb;
+      end Obtenir_nb_ancetres;
+
+
+
+
+    function Obtenir_nb_ancetres_Gen(A : in T_Arbre_Gen; Cle: in Integer; Gen : in Integer) return Liste is
+            A1:  T_Arbre_Gen;
+            L: Liste;
+            p : T_Pile;
+
+      begin
+            initialiser_liste(L);
+            chercher_noeud(A,A1,Cle);
+            empiler(P,gauche(A1));
+            A1 := sommet(P);
+        while not est_vide(P) loop
+
+            for i in 1..gen loop
+                A1 := gauche(A1);
+                ajouter_liste(L,Obtenir_Cle(A1));
+            end loop;
+
+            depiler(P);
+            if not est_egal_null(droite(A1)) then
+                empiler(P,droite(A1));
+            else
+                null;
+            end if;
+        end loop;
+
+            return L;
+    end Obtenir_nb_ancetres_gen;
+
+    procedure supprimer_noeud_gen( A: in out T_Arbre_Gen; Cle: in Integer) is
+     A2, A1 : T_arbre_gen;
+     P : T_pile;
+     L : Liste;
+     begin
+        initialiser_Liste(L);
+        A1 :=A;
+        initialiser(P);
+        empiler(P,A);
+      while not est_vide(P) loop
+         A1 := sommet(P);
+         depiler(P);
+         if not est_egal_null(droite(A1)) then
+           empiler(P,droite(A1));
+         else
+            null;
+         end if;
+
+         if not est_egal_null (gauche(A1)) then
+           empiler(P,gauche(A1));
+         else
+            null;
+         end if;
+      end loop;
+      supprimer_Noeud(A,Cle);
+    end supprimer_noeud_gen;
+
+    procedure afficher_arbre_gen(A : in T_arbre_gen ;Cle : in Integer) is
+        A1 : T_Arbre_gen;
+     begin
+        chercher_noeud(A,A1,Cle);
+        afficher_arbre(A1);
+     end afficher_arbre_gen;
+
+
+
+
+
+
+    function Un_parent(A: in T_Arbre_gen) return Liste is
+     A1 : T_Arbre_gen;
+     P : T_Pile;
+     L : Liste;
+     begin
+        A1 :=A;
+        initialiser(P);
+        empiler(P,A);
+      while not est_vide(P) loop
+         A1 := sommet(P);
+         depiler(P);
+         if not est_egal_null(droite(A1)) then
+           empiler(P,droite(A1));
+           if est_egal_null(gauche(A1)) then
+                ajouter_Liste(L, Obtenir_Cle(A1));
+           else
+                null;
+           end if;
+         else
+            null;
+         end if;
+
+         if not est_egal_null(gauche(A1)) then
+           empiler(P,gauche(A1));
+           if est_egal_null (droite(A1)) then
+                ajouter_Liste(L, Obtenir_Cle(A1));
+           else
+                null;
+           end if;
+         else
+            null;
+         end if;
+      end loop;
+        return L;
+    end Un_parent;
+
+
+    function Deux_Parents(A:in T_Arbre_Gen) return Liste is
+        L:Liste;
+        procedure Deux_Parents0(A:in T_Arbre_Gen;L:in out Liste) is
+        begin
+            if est_egal_null(A) then
+                null;
+            else
+                if not est_egal_null(gauche(A)) and not est_egal_null(droite(A)) then
+                    Ajouter_Liste(L,obtenir_cle(A));
+                    Deux_Parents0(gauche(A),L);
+                    Deux_Parents0(droite(A),L);
+                end if;
+            end if;
+        end Deux_Parents0;
+    begin
+        Initialiser_Liste(L);
+        Deux_Parents0(A,L);
+        return L;
+    end Deux_Parents;
+
+
+
+    function Aucun_Parent(A:in T_Arbre_Gen) return Liste is
+        L: Liste;
+        procedure Aucun_Parent0(A:in T_Arbre_Gen;L : in out Liste) is
+        begin
+            if est_egal_null(A) then
+                null;
+            else
+                if est_egal_null(gauche(A)) and est_egal_null(droite(A)) then
+                    Ajouter_Liste(L,obtenir_cle(A));
+                    Aucun_Parent0(gauche(A),L);
+                    Aucun_Parent0(droite(A),L);
+                end if;
+            end if;
+        end Aucun_Parent0;
+    begin
+        Initialiser_Liste(L);
+        Aucun_Parent0(A,L);
+        return L;
+    end Aucun_Parent;
+
+
+
+    function Ancetres_Gen(A: in T_Arbre_Gen;Gen:in Integer)return Liste is
+        Compteur: Integer;
+        L: Liste;
+
+
+        procedure Ancetres_Gen0(A:in T_Arbre_Gen;Gen:in Integer; L:in out Liste;Compteur:in Integer) is
+        begin
+            if Compteur=Gen then
+                null;
+            else
+                if not est_egal_null(gauche(A)) then
+                    Ajouter_Liste(L,obtenir_cle(gauche(A)));
+                    Ancetres_Gen0(gauche(A),Gen,L,Compteur+1);
+                else
+                    null;
+                end if;
+                if not est_egal_null(droite(A)) then
+                    Ajouter_Liste(L,obtenir_Cle(droite(A)));
+                    Ancetres_Gen0(droite(A),Gen,L,Compteur+1);
+                else
+                    null;
+                end if;
+            end if;
+        end Ancetres_Gen0;
+
+    begin
+
+        Compteur:=0;
+        Initialiser_Liste(L);
+        Ancetres_Gen0(A,Gen,L,Compteur);
+        return L;
+    end Ancetres_Gen;
+
+    function Homonyme(A:in T_Arbre_Gen;R:in T_Registre; n: in Integer; m: in Integer) return Liste is
+        An:T_Arbre_Gen;
+        Am:T_Arbre_Gen;
+        resultat: Liste;
+        Ln : Liste;
+        Lm : Liste;
+
+        Ln0 : Liste;
+        Lm0: Liste;
+
+
+    begin
+        --Initialiser_Arbre_Gen(An,R);
+        chercher_noeud(A,An,n);
+        --Initialiser_Arbre_Gen(Am,R);
+        chercher_noeud(A,Am,m);
+
+        Initialiser_Liste(Ln);
+        Initialiser_Liste(Lm);
+
+        Obtenir_Tous_Les_Ancetres(An,Ln);
+        Obtenir_Tous_Les_Ancetres(Am,Lm);
+
+        Initialiser_Liste(resultat);
+        Ln0:=Ln;
+        for i in 1..Longueur_Liste(Ln) loop
+            Lm0:=Lm;
+            for j in 1..Longueur_Liste(Lm) loop
+                if Obtenir_nom(R,Ln0.Cle)=Obtenir_Nom(R,Lm0.Cle) then
+                    Ajouter_Liste(resultat,Ln0.Cle);
+                    Ajouter_Liste(resultat,Lm0.Cle);
+                else
+                    null;
+                end if;
+                Lm0:=Lm.suivant;
+            end loop;
+            Ln0:=Ln.suivant;
+        end loop;
+        return resultat;
+    end Homonyme;
+
+
+    function Est_Present_Gen(A:in T_Arbre_Gen;Cle:in Integer) return Boolean is
+    begin
+        return Est_Present(A,Cle);
+    end Est_Present_Gen;
+
+
+procedure Obtenir_Tous_Les_Ancetres(A : in T_Arbre_Gen ; L : in out Liste) is
+        begin
+            if est_egal_null(gauche(A)) then
+                null;
+            else
+                Ajouter_Liste(L,Obtenir_Cle(gauche(A)));
+                Obtenir_Tous_Les_Ancetres(gauche(A),L);
+            end if;
+
+            if est_egal_null(droite(A)) then
+                null;
+            else
+                Ajouter_Liste(L,Obtenir_Cle(droite(A)));
+                Obtenir_Tous_Les_Ancetres(droite(A),L);
+            end if;
+
+        end Obtenir_Tous_Les_Ancetres;
+
+
+
+
+
+
+
+
+
+
+
+
+    --Manipulation des listes
+    procedure Initialiser_Liste(L: out Liste) is
+    begin
+        L:=null;
+    end Initialiser_Liste;
+
+
+    procedure Afficher_Liste(L:in Liste) is
+    L0: Liste;
+    begin
+        if L=null then
+            Put("La liste est vide");
+        else
+            null;
+        end if;
+        L0:=L;
+        while L0/=null loop
+            Put(L0.all.Cle);
+            L0:=L0.all.suivant;
+        end loop;
+    end Afficher_Liste;
+
+
+    procedure Ajouter_Liste(L: in out Liste;Element:in Integer) is
+        L0: Liste;
+    begin
+        if L=null then
+            L:=new Cellule;
+            L.all.Cle:=Element;
+        else
+            if Est_Present_Liste(L,element) then
+                null;
+            else
+                L0:=L;
+                while L0.all.Suivant/=null loop
+                    L0:=L0.Suivant;
+                end loop;
+                L0.all.Suivant := new Cellule;
+                L0.all.Suivant.Cle := element;
+                L0:=null;
+            end if;
+        end if;
+    end Ajouter_Liste;
+
+
+    procedure Vider_Liste(L:in out Liste;Element: in Integer) is
+        procedure Free_Liste is new Ada.Unchecked_Deallocation (Cellule, Liste);
+    begin
+        if L /= Null then
+            Vider_Liste(L.all.Suivant,Element);
+            Free_Liste(L);
+        else
+            Null;
+        end if;
+    end Vider_Liste;
+
+    function Est_Present_Liste(L: in Liste; Element: in Integer) return Boolean is
+        L0:Liste;
+        resultat: Boolean;
+    begin
+        L0:=L;
+        resultat:=False;
+        while L0/=null loop
+            if L0.Cle=Element then
+                resultat:=True;
+            else
+                null;
+            end if;
+            L0:=L0.suivant;
+        end loop;
+        return resultat;
+    end Est_Present_Liste;
+
+
+    function Longueur_Liste(L:in Liste) return Integer is
+        n : Integer;
+        L0: Liste;
+    begin
+        L0:=L;
+        n:=0;
+        while L0/=null loop
+            n:=n+1;
+            L0:=L0.all.suivant;
+        end loop;
+        return n;
+   end Longueur_Liste;
+
+   procedure Detruire(A:in out T_Arbre_Gen) is
+   begin
+      Detruire_arbre(A);
+   end Detruire;
+
+
+
+
+
+
+end Arbre_genealogique;
+
+

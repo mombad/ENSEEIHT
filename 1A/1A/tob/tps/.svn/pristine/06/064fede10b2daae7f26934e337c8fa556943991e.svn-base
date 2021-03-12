@@ -1,0 +1,32 @@
+Date de l'évaluation : mercredi 29 janvier 2020, 16:04:10 (UTC+0100)
+
+Compilation de Cercle.java : OK.
+
+Types d'erreurs checkstyle : 24	(voir evaluation1/Cercle.checkstyle)
+
+Résultat de recherche de similitudes sur Cercle.java dans evaluation1/Cercle.sim
+
+JavaDoc automatique de Cercle : ok	(voir evaluation1/Cercle.javadoc)
+
+Un constructeur devrait appeler l'autre.
+
+Test SujetCercleTest : OK (14 tests)	(voir evaluation1/SujetCercleTest.log)
+Test RobustesseCercleTest : OK (20 tests)	(voir evaluation1/RobustesseCercleTest.log)
+Test FormeCercleTest : OK (12 tests)	(voir evaluation1/FormeCercleTest.log)
+Test Forme2CercleTest : Tests run: 9,  Failures: 3	(voir evaluation1/Forme2CercleTest.log)
+    1) testConstructeurPointPointSetX(Forme2CercleTest)
+        AssertionError
+    2) testConstructeurPointPointDistance(Forme2CercleTest)
+        AssertionError
+    3) testCreerCercleDistance(Forme2CercleTest)
+        AssertionError
+
+
+ComplementsCercleTest : non modifiée (ok)
+
+Compilation de CercleTest.java : OK.
+Test CercleTest : Tests run: 1,  Failures: 1	(voir evaluation1/CercleTest.log)
+    1) initializationError(CercleTest)
+        Exception: No runnable methods
+
+CercleTest échoue sur Cercle : pas de test avec les mutants

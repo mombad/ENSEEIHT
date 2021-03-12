@@ -1,0 +1,9 @@
+function [r,a,b]=calcul_parametres(X,Y);
+mx=mean(X);
+my=mean(Y);
+sx=sqrt(mean(X.*X)-mx*mx);
+sy=sqrt(mean(Y.*Y)-my*my);
+sxy=mean(X.*Y)-mx*my;
+r=sxy/(sx*sy);
+a=sxy/(sx*sx);
+b=my-mx*(sxy/(sx*sx));

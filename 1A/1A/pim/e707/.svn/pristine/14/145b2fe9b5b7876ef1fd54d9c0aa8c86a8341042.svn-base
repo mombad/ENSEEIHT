@@ -1,0 +1,43 @@
+
+generic
+    type T_Cle is private;
+    
+
+Package Arbre_Binaire is 
+  
+    
+        Est_Absent_Cle : exception;
+        Est_Present_Cle :  exception;
+
+	Type T_Arbre_Binaire is limited private;
+
+	procedure Initialiser_Arbre(A : out T_Arbre_Binaire);
+
+	procedure Ajouter(A: in out T_Arbre_Binaire; Cle_parent: in T_Cle; Cle_enfant: in T_Cle; choix: in Boolean);
+        --Exception Est_Absent_Cle dans le cas ou Cle_enfant n'existe pas.
+        --Exception Est_Present_Cle dans le cas ou le parent existe déja.
+
+	procedure Afficher_Arbre(A : in T_Arbre_Binaire);
+        --Exception Est_Absent_Cle dans le cas ou Cle n'existe pas.
+
+	procedure Supprimer_Noeud(A : in out T_Arbre_Binaire; Cle : in T_Cle);
+        --Exception Est_Absent_Cle dans le cas ou Cle n'existe pas.
+    
+    function Est_Present(A: in T_Arbre_Binaire; Cle: in T_Cle) return Boolean;
+    
+    procedure Detruire(A:in out T_Arbre_Binaire);
+    
+    function Est_Vide_Arbre(A:in out T_Arbre_Binaire) return Boolean;
+
+
+private
+
+	Type T_Cellule_Arbre;
+	Type T_Arbre_Binaire is access T_Cellule_Arbre;
+	Type T_Cellule_Arbre is
+	    record
+	    	Cle: T_Cle;
+	    	gauche: T_Arbre_Binaire;
+	    	droite: T_Arbre_Binaire;
+        end record;
+    end arbre_binaire;

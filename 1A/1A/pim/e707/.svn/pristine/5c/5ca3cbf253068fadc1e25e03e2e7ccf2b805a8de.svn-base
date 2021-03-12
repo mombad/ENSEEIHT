@@ -1,0 +1,36 @@
+
+
+
+Package body arbre_binaire is
+    Procedure Initialiser_Arbre (A: out T_Arbre_Binaire) is
+    begin
+        A:=null;
+    end Initialiser_Arbre;
+
+    Procedure Ajouter(A: in out T_Arbre_Binaire ; Cle_parent: in Integer ; Cle_enfant: in Integer ; choix: in Boolean) is
+        noeud: T_Cellule_Arbre;
+        ajout: boolean;
+    begin
+        noeud := new T_Cellule_Arbre;
+        noeud.all.pere := Null;
+        noeud.all.mere := Null;
+        noeud.all.Cle := Cle_parent;
+        if choix then
+            if A.all.Cle = Cle_enfant then
+                if A.all.pere /= Null then
+                    Put(" Parent existant");
+                else
+                    A:=noeud;
+                end if;
+            else
+                Ajouter(A.all.pere,Cle_parent,Cle_enfant,choix);
+                Ajouter(A.all.mere,Cle_parent,Cle_enfant,choix);
+                exception
+                when Constraint_Error => raise Est_Absent_Cle;
+                    Put("non présent, ajouter quand même? ");
+                        Get(ajout);
+                        if ajout then
+                            A:=noeud;
+                        end if;
+            end if;
+    end Ajouter;

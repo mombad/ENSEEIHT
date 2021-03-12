@@ -1,0 +1,66 @@
+with lien;
+use lien;
+with registre;
+use registre;
+
+Package Arbre_genealogique is
+
+    type Liste is limited private; 
+    procedure Initialiser_Arbre(A : out T_Arbre_Binaire);
+
+
+    procedure Ajouter_Arbre_Gen(A: in out T_Arbre_Binaire;R: in out T_Registre; Cle_parent: in Integer ;Cle_enfant: in Integer);
+    --Exception Est_Absent_Cle dans le cas ou Cle_enfant n'existe pas.
+    --Exception Est_Present_Cle dans le cas ou le parent existe déja.
+
+    function Obtenir_nb_ancetres(A: in T_Arbre_Binaire; Cle: in Integer) return Integer;
+      --Exception Est_Absent_Cle dans le cas ou Cle n'existe pas.
+
+    function Obtenir_nb_ancetres_Gen(A : in T_Arbre_Binaire; Cle: in Integer; Gen : in Integer) return Liste;
+      --Exception Est_Absent_Cle dans le cas ou Cle n'existe pas.
+
+    procedure Afficher_Arbre_Gen(A : in T_Arbre_Binaire; Cle : in Integer);
+      --Exception Est_Absent_Cle dans le cas ou Cle n'existe pas.
+
+    procedure Supprimer_Noeud(A : in out T_Arbre_Binaire; Cle : in Integer);
+      --Exception Est_Absent_Cle dans le cas ou Cle n'existe pas.
+
+    function Un_Parent(A: in T_Arbre_Binaire) return Liste;
+
+    function Deux_Parents(A:in T_Arbre_Binaire) return Liste;
+
+    function Aucun_Parent(A : in T_Arbre_Binaire) return Liste;
+
+    function Ancetres_Gen(A : in T_Arbre_Binaire; Gen: in Integer) return Liste;
+
+    function Homonyme(A: in T_Arbre_Binaire; n: in Integer; m: in Integer) return Boolean;
+
+    procedure Modifier(A: in out T_Arbre_Binaire; Cle: in Integer);
+    -- Exception Est_absent_Cle si la clé n'existe pas.
+    
+    procedure Detruire(A:in out T_Arbre_Binaire);
+
+    
+    
+    
+private
+    type Cellule;
+
+    type Liste is access cellule;
+    type cellule is 
+        record
+        Cle: Integer;
+        suivant : Liste;
+        end record;
+ 
+ 
+    
+ 
+    
+    
+end Arbre_genealogique;
+
+    
+            
+            
+        

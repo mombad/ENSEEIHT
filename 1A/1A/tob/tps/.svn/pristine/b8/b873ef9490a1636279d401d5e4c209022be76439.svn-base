@@ -1,0 +1,29 @@
+package allumettes;
+import java.util.Scanner;
+
+public class Joueur {
+
+	protected String nom;
+	protected Strategie strategie;
+
+	protected Joueur(String nom, Strategie strategie) {
+		this.nom = nom;
+		this.strategie = strategie;
+	}
+
+
+	public String getNom() {
+		return this.nom;
+	}
+
+	public int getPrise(Jeu jeu) throws OperationInterditeException,
+		CoupInvalideException {
+
+		return this.strategie.getPrise(jeu);
+	}
+
+
+	public String toString() {
+		return this.nom;
+	}
+}

@@ -1,0 +1,24 @@
+[GENERATED OBJECT FILE]
+b__tests_arbre_genealogique.o
+[PROJECT FILES]
+/home/mbenahme/e707/livrables/default.gpr
+20191219101304
+[BOUND OBJECT FILES]
+/home/mbenahme/e707/livrables/piles.o
+/home/mbenahme/e707/livrables/arbre_binaire.o
+/home/mbenahme/e707/livrables/lien.o
+/home/mbenahme/e707/livrables/registre.o
+/home/mbenahme/e707/livrables/arbre_genealogique.o
+/home/mbenahme/e707/livrables/tests_arbre_genealogique.o
+[GENERATED SOURCE FILES]
+b__tests_arbre_genealogique.ads
+b__tests_arbre_genealogique.adb
+b__tests_arbre_genealogique.ali
+[RESULTING OPTIONS]
+-L/home/mbenahme/e707/livrables/
+-L/home/mbenahme/e707/livrables/
+-L/applications/gnat/lib/gcc/x86_64-pc-linux-gnu/8.3.1/adalib/
+-static
+-static-libgcc
+/applications/gnat/lib/gcc/x86_64-pc-linux-gnu/8.3.1/adalib/libgnat.a
+-ldl

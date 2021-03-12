@@ -1,0 +1,191 @@
+Nom    :BEN AHMED DAHO 
+Prénom :Mohamed
+Groupe :N
+--------------------------------------------------------------------------------
+
+
+Consigne : Dans ce fichier, il faut répondre à la place des "..." et sur les
+lignes qui les suivent.  Le texte déjà écrit doit être conservé !
+
+=====[ Temps passé ]============================================================
+
+Ces informations de temps sont demandées à titre indicatif et ne sont pas
+prises en compte dans la notation du projet.
+
+Toutes les durées sont à saisir en heures.  Par exemple, si vous avez passé
+1h45, il faudra indiquer 1.75.  Si vous avez passé 2h30, il faudra indiquer
+2.5.
+
+Temps total passé sur ce mini-projet (en h) : 5.5h
+Temps passé sur les raffinages (en h) : 3.5h
+
+=====[ Raffinages ]=============================================================
+
+-- Ne donner que les niveaux de raffinages qui sont informatifs.   Il est
+-- généralement inutile de donner le dernier niveau de raffinage s'il ne
+-- contient pas d'étapes non élémentaires.
+
+
+R0 : Le programme doit permettre à l'utilisateur de réviser les tables de multiplications. Il lui donnera le choix de la table à réviser et à la fin d'une séance il lui retournera les résultats et le temps et le conseillera sur les tables à retravailler en fonction du nombre de bonnes réponses et du temps de réponse.
+
+
+Exemples : On ne donnera pas d'exemples d'utilisation
+
+
+R1 : -Choisir la table à réviser et s'assurer que la table choisie correspond à un nombre entier entre 1 et 10.		
+Numero_table:out Entier 
+     
+     -Poser 10  questions à l'utlisateur.
+Numero_table:in Entier  Bonnes_reponses:out Entier  Tmax:out Réel   Ttot:out Réel   Nb_droite:out Entier 
+     
+     -A la fin de la série de questions, informer l'utilisateur sur sa performance et le conseiller en fonction du nombre de bonnes réponses.		
+Bonnes_reponses:in Entier       
+     
+     -Si le temps de réponse le plus long est supérieur au temps moyen d'au moins un seconde, conseiller de nouveau l'utilisateur en lui demandant de réviser la table du nombre de droite de la question de ce temps maximal.	
+Tmax:in Réel    Ttot:out Réel
+     
+     -Demander si il veut réessayer.	
+Rejouer:out Booléen     Oui:out Caractère
+
+
+R2: -Comment "Poser 10 questions à l'utilisateur."
+
+POUR i de 1 à 10:
+	
+	Choisir aléatoirement un entier entre 1 et 10 et on calcule le produit de ce nombre et du nombre de la table choisie.       
+nb_d: out Entier        resultat: out Entier        --nb_d est le nombre tiré aléatoirement
+	
+	Afficher la question.
+	
+	Prendre l'heure à laquelle la question s'affiche et l'heure à laquelle l'utilisateur donne une réponse qu'elle soit correcte ou non et soustraire la dernière à la première pour avoir le temps de réponse.  
+t: out Duree --c'est du type duration en Ada--       reponse: out Entier
+	
+	SI t > Tmax ALORS
+        Tmax:=t
+        Nb_droite:= nb_d
+    SINON
+        Rien
+    FIN_SI	
+	
+    Ttot:= Ttot + t
+	
+	SI reponse = resultat ALORS
+        Bonnes_reponses:= Bonnes reponses + 1
+        Ecrire("Bravo!")
+    SINON
+        Ecrire("Mauvaise réponse : Ma bonne réponse est ",resultat)
+    FIN_SI
+
+FIN_POUR
+
+
+    -Comment "A la fin de la série de questions, informer l'utilisateur sur sa performance et le conseiller en fonction du nombre de bonnes réponses."
+     
+SELON Bonnes_reponses DANS:
+     
+     10		=> Ecrire("Aucune erreur.Excellent!""
+     
+     9		=> Ecrire("Une seule erreur.Très bien")
+     
+     0		=> Ecrire("Tout est faux! Volontaire ?")
+     
+     1..4	=> Ecrire("Seulement",Bonnes_reponses,"bonnes réponses. Il faut apprendre la table de ",Numero_table)
+     
+     Autres	=> Ecrire(10-Bonnes_reponses,"erreurs. Il faut encore travailler la table de ",Numero_table)
+     
+FIN_SELON
+
+
+    -Comment "Si le temps de réponse le plus long est supérieur au temps moyen d'au moins un seconde, conseiller de nouveau l'utilisateur en lui demandant de réviser la table du nombre de droite de la question de ce temps maximal."
+
+
+SI Tmax > (Ttot/10)+1 ALORS:
+    Ecrire("Vous pouvez aussi réviser la table de ",Nb_droite)
+FIN_SI
+
+
+    -Comment "Demander s'il veut réssayer":
+REPETER:
+    Corps du programme
+    Ecrire("Voulez-vous retenter ?")
+    Ecrire("Entrez n pour quitter")
+    Ecrire("Entrez n'importe quelle autre lettre pour retenter")
+    Saisir la valeur de Oui.
+    SI Oui=n ALORS
+        Ecrire("Au revoir")
+        Rejouer:= Faux
+    SINON
+        Ecrire("On recommence")
+JUSQU'A: Rejouer=Faux
+
+=====[ Test ]===================================================================
+
+* Expliquer rapidement comment vous avez testé votre programme.
+
+J'ai testé les cas suivants pour des tables différentes:
+    10 bonnes réponses et je retente
+    10 bonnes réponses et j'arrête
+
+    9 bonnes réponses et je retente
+    9 bonnes réponses et j'arrête
+
+    7 bonnes réponses et je retente
+    7 bonnes réponses et j'arrête
+
+    2 bonnes réponses et je retente
+    2 bonnes réponses et j'arrête
+
+    0 bonnes réponses et je retente
+    0 bonnes réponses et j'arrête
+
+
+=====[ Difficultés ]============================================================
+
+* Indiquer les difficultés rencontrées
+
+
+=====[ Questions ]==============================================================
+
+Pour les questions suivantes, il ne s'agit pas de modifier le programme écrit
+mais d'expliquer comment il faudrait le modifier pour prendre en compte les
+évolutions envisagées.
+
+
+* Au lieu de poser 10 questions, on veut en poser 15. Comment faire ?
+
+
+On modifie la valeur 10 dans le "Pour i de 1 à 10" en 15 et dans "SELON Bonnes_reponses DANS:" on adapte les valeurs des intervalles (par exemple mettre 15 à la place de 10 pour "Aucune erreur. Excellent") 
+
+
+* On veut afficher "Bien" si l'utilisateur n'a commis que 2 ou 3 erreurs.
+  Comment modifier le programme ?
+
+Dans "SELON Bonnes_reponses DANS:" on crée un autre cas possible pour les valeurs 8 et 9 bonnes réponses en écrivant par exemple : 8,9 => Ecrire("Bien")
+
+
+* On veut donner la possibilité à l'utilisateur d'abandonner le programmes en
+  tapant 0 quand on lui demande le résultat d'une multiplication. Quelles
+  modifications faut-il alors faire au programme ? 
+
+Il faut rajouter une structure de contrôle conditionnelle dans la boucle Pour du type:
+
+SI reponse = 0  ALORS
+    Rejouer:= False
+FIN_SI
+
+
+* À la fin d'une série de questions, on veut proposer à l'utilisateur de
+  réviser la table pour laquelle l'utilisateur a commis le plus d'erreurs.
+  Par exemple, s'il se trompe pour 3 * 5, on compte une erreur pour 3 et
+  une erreur pour 5.  Comment faire ?
+
+Il faut créer un tableau de 10 valeurs qui représentent chacune le nombre d'erreurs commises pour le nombre correspondant et ajouter dans la boucle Pour dans le SI correspondant à une mauvaise réponse deux incrémentations des valeurs du tableau. Il faut ensuite chercher le maximum du tableau et proposer à l'utilisateur de réviser la table correspondant à la position du maximum.
+
+
+=====[ Remarques diverses ]=====================================================
+
+Cette rubrique est libre (et ne sera pas prise en compte dans la notation).
+
+...
+
+--------------------------------------------------------------------------------

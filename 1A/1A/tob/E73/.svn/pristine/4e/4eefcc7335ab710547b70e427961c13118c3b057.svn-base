@@ -1,0 +1,123 @@
+package fenetre;
+
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+
+import territoires.*;
+
+import java.util.List;
+
+public class ActionAttaquer implements ActionListener {
+	
+	private JlistListener list;
+
+
+	public ActionAttaquer(JlistListener list) {
+		this.list = list;
+	}
+	
+	
+	public void fenetre_attaquer(){
+		int FPS_MIN = 0;
+		int FPS_MAX = 100;
+		int FPS_INIT = 15; 
+		JFrame fenetre = new JFrame();
+		Container contenu = fenetre.getContentPane();
+		contenu.setLayout(new GridLayout(10,1));
+		fenetre.setTitle("Attaquer");
+		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		fenetre.setLocationRelativeTo(null);
+		fenetre.setPreferredSize(new Dimension(400, 500));
+		
+		contenu.add(new JLabel("Quelle Territoire_test souhaitez vous attaquer ?"));
+		List <String> les_territoires = new ArrayList<String>();  
+		for (Territoire_test t : list.getTerritoire().getVoisin()) {
+			les_territoires.add(t.getNom());
+		}
+		JList  liste_selection = new JList(les_territoires.toArray()); 
+		contenu.add(liste_selection);
+		
+		contenu.add(new JLabel("Combien de troupes souhaitez vous envoyer?"));
+		JSlider slider = new JSlider(JSlider.HORIZONTAL,
+                FPS_MIN, FPS_MAX, FPS_INIT);
+		
+
+		//Turn on labels at major tick marks.
+		slider.setMajorTickSpacing(25);
+		slider.setMinorTickSpacing(1);
+		slider.setPaintTicks(true);
+		slider.setPaintLabels(true);
+		JLabel label = new JLabel("troupes offensives :");
+		contenu.add(label);
+		contenu.add(slider);
+		slider.addChangeListener(new JsliderListener(label,slider,"troupes offensives :"));
+		
+		JLabel label1 = new JLabel("troupes d�fensives :");
+		
+		JSlider slider1 = new JSlider(JSlider.HORIZONTAL,
+                FPS_MIN, FPS_MAX, FPS_INIT);
+		
+
+		//Turn on labels at major tick marks.
+		slider1.setMajorTickSpacing(25);
+		slider1.setMinorTickSpacing(1);
+		slider1.setPaintTicks(true);
+		slider1.setPaintLabels(true);
+		contenu.add(label1);
+		contenu.add(slider1);
+		slider1.addChangeListener(new JsliderListener(label1,slider1,"troupes d�fensives :"));
+		
+		JLabel label2 = new JLabel("troupes �quilibr�es :");
+		JSlider slider2 = new JSlider(JSlider.HORIZONTAL,
+                FPS_MIN, FPS_MAX, FPS_INIT);
+		
+
+		//Turn on labels at major tick marks.
+		slider2.setMajorTickSpacing(25);
+		slider2.setMinorTickSpacing(1);
+		slider2.setPaintTicks(true);
+		slider2.setPaintLabels(true);
+		contenu.add(label2);
+		slider2.addChangeListener(new JsliderListener(label2,slider2,"troupes �quilibr�es :"));
+		contenu.add(slider2);
+		
+		
+		JPanel boutons = new JPanel(new FlowLayout());
+		JButton valider = new JButton("Valider");
+		JButton abandonner = new JButton("Abandonner");
+		
+		boutons.add(valider);
+		boutons.add(abandonner);
+		abandonner.addActionListener(new ActionRetour(fenetre));
+		contenu.add(boutons);
+		
+		
+		
+		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	  	fenetre.pack();
+	  	fenetre.setVisible(true);
+	  	fenetre.toFront();
+	}
+	
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		fenetre_attaquer();
+		System.out.println("attaquer");
+		// TODO Auto-generated method stub
+		
+	}
+
+}

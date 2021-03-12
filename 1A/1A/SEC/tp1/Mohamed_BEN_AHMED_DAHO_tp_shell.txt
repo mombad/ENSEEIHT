@@ -1,0 +1,51 @@
+#TP1
+
+#1
+find -name "*.o"
+#2
+find -name "*.o" | wc -l
+#3
+find -name "core" -size +0 -exec rm -rf {} \
+#8
+cat fichier |tr -dc aeiouy | wc -m
+#10
+ls -l | grep ^d | tr -s ' ' | cut -d ' ' -f 3,6,9
+
+
+
+
+
+
+
+#TP2
+
+#2 
+rep="a"
+while  [ `expr substr $rep 1 1` != "o" ] &&  [ `expr substr $rep 1 1` != "n" ]
+do
+    echo "Etes-vous satisfait ? (o/n)"
+    read rep
+done
+
+#4
+
+#6
+
+#7
+inv() {
+    if [ $# -eq 0 ]
+    then echo "inv <chaîne non vide> qui inverse la chaîne de caractères fournie en paramètre et l'affiche. Si le paramètre est oublié, la commande affiche son mode d'emploi."
+    else
+	entree=$1
+	string=''		
+	i=$(echo -n $entree | wc -m)
+        while [ $i != 0 ] 
+	do
+		variable=$(echo $entree | cut -c$i)
+     		string="$string$variable"
+		i=$((i-1))
+		
+	done
+	echo $string
+    fi
+}

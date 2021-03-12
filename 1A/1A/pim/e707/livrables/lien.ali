@@ -1,0 +1,104 @@
+V "GNAT Lib v2019"
+A -gnatwa
+A -g
+P ZX
+
+RN
+RV NO_ALLOCATORS
+RV NO_DIRECT_BOOLEAN_OPERATORS
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_LOCAL_ALLOCATORS
+RV NO_RECURSION
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_DEFAULT_INITIALIZATION
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U lien%b		lien.ads		25f785a6 NE OO PK IL
+W ada%s			ada.ads			ada.ali
+Z ada.exceptions%s	a-except.adb		a-except.ali
+Z ada.integer_text_io%s	a-inteio.ads		a-inteio.ali
+Z ada.tags%s		a-tags.adb		a-tags.ali
+Z ada.text_io%s		a-textio.adb		a-textio.ali
+Z ada.unchecked_deallocation%s
+W arbre_binaire%s	arbre_binaire.adb	arbre_binaire.ali  ED
+Z piles%s		piles.adb		piles.ali  ED
+Z system%s		system.ads		system.ali
+Z system.exception_table%s  s-exctab.adb	s-exctab.ali
+Z system.standard_library%s  s-stalib.adb	s-stalib.ali
+
+U lien%s		lien.ads		6e620bd1 EB EE OO PK IL
+W arbre_binaire%s	arbre_binaire.adb	arbre_binaire.ali
+Z system%s		system.ads		system.ali
+Z system.exception_table%s  s-exctab.adb	s-exctab.ali
+Z system.standard_library%s  s-stalib.adb	s-stalib.ali
+
+D ada.ads		20190518041255 76789da1 ada%s
+D a-except.ads		20190518041255 291912d5 ada.exceptions%s
+D a-inteio.ads		20190518041256 f64b89a4 ada.integer_text_io%s
+D a-ioexce.ads		20190518041254 e4a01f64 ada.io_exceptions%s
+D a-stream.ads		20190518041255 119b8fb3 ada.streams%s
+D a-tags.ads		20190518041256 491b781d ada.tags%s
+D a-textio.ads		20190518041256 aef4d56d ada.text_io%s
+D a-tiinio.ads		20190518041254 390edddb ada.text_io.integer_io%s
+D a-unccon.ads		20190518041255 0e9b276f ada.unchecked_conversion%s
+D a-uncdea.ads		20190518041255 eff36322 ada.unchecked_deallocation%s
+D arbre_binaire.ads	20191219162125 4b958e77 arbre_binaire%s
+D arbre_binaire.adb	20191219165127 6dabe135 arbre_binaire%b
+D interfac.ads		20190518041254 5ab55268 interfaces%s
+D i-cstrea.ads		20190518041254 e53d8b8e interfaces.c_streams%s
+D lien.ads		20191118200102 25f785a6 lien%s
+D lien.ads		20191118200102 25f785a6 lien%b
+D piles.ads		20191219163206 a5951ce6 piles%s
+D piles.adb		20191219164853 43a1d5bc piles%b
+D system.ads		20190518041255 4635ec04 system%s
+D s-crtl.ads		20190518041254 0ebbdb71 system.crtl%s
+D s-exctab.ads		20190518041255 54135002 system.exception_table%s
+D s-ficobl.ads		20190518041256 078245e4 system.file_control_block%s
+D s-parame.ads		20190518041256 48ec542b system.parameters%s
+D s-secsta.ads		20190518041256 20bbe636 system.secondary_stack%s
+D s-soflin.ads		20190518041255 a7318a92 system.soft_links%s
+D s-stache.ads		20190518041256 a37c21ec system.stack_checking%s
+D s-stalib.ads		20190518041256 09bd3940 system.standard_library%s
+D s-stoele.ads		20190518041256 2dc34a04 system.storage_elements%s
+D s-traent.ads		20190518041254 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20190518041255 34867c83 system.unsigned_types%s
+D s-wchcon.ads		20190518041255 1b7d22d2 system.wch_con%s
+G a e
+G c b s s [b lien 8 1 2_5]
+G c s s s [s lien 2 5 none]
+G c Z s s [initialiser_arbre lien 18 15 2_5]
+G c Z s s [detruire_arbre lien 22 15 2_5]
+G c Z s s [ajouter lien 26 15 2_5]
+G c Z s s [supprimer_noeud lien 32 15 2_5]
+G c Z s s [est_present lien 37 14 2_5]
+G c Z s s [gauche lien 48 14 2_5]
+G c Z s s [droite lien 52 14 2_5]
+G c Z s s [obtenir_cle lien 56 14 2_5]
+G c Z s s [egal lien 60 15 2_5]
+G c Z s s [est_egal lien 64 14 2_5]
+G c Z s s [est_egal_null lien 68 14 2_5]
+G c Z s s [chercher_noeud lien 72 15 2_5]
+G c Z s s [egal_null lien 76 15 2_5]
+G c Z s s [egal_cle lien 80 15 2_5]
+G c Z s s [t_cellule_arbreIP lien 89 10 2_5]
+G c Z s s [initialiser lien__piles_arbre 12 19 10_5_2_5]
+G c Z s s [est_vide lien__piles_arbre 17 18 10_5_2_5]
+G c Z s s [sommet lien__piles_arbre 22 18 10_5_2_5]
+G c Z s s [empiler lien__piles_arbre 28 19 10_5_2_5]
+G c Z s s [depiler lien__piles_arbre 33 19 10_5_2_5]
+G c Z s s [detruire lien__piles_arbre 38 19 10_5_2_5]
+G c Z s s [t_celluleIP lien__piles_arbre 53 14 10_5_2_5]
+G c Z s s [free lien__piles_arbre 9 15 10_5_2_5]
+G c Z s s [free lien 15 15 2_5]
+G r i none [b lien 8 1 2_5] [piles standard 6 9 none]
+G r i none [s lien 2 5 none] [arbre_binaire standard 6 9 none]
+X 11 arbre_binaire.ads
+3+10 T_Cle 16|2r39
+6k9*Arbre_Binaire 96e18 16|1w6 2r25
+X 16 lien.ads
+2K13*lien[11|6]
+

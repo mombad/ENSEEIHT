@@ -1,0 +1,86 @@
+R0: -Réaliser la partie 1.
+
+R1: -Créer une interface conviviale pour l'utilisateur.
+    -Définir les opérations de manipulations de l'arbre.
+    -Définir les opérations de manipulations du registre.
+
+R2: -Raffinage de "Créer une interface conviviale pour l'utilisateur."
+
+Ecrire("Bienvenue dans le programme de gestion d'arbre généalogique")
+
+TANT QUE reponse/=q FAIRE
+
+    Ecrire("Choisissez une action à effectuer : ")
+    Ecrire("-Pour ajouter un individu, entrez 0")
+    Ecrire("-Pour obtenir le nombre d'ancêtres connus d'un individu, entrez 1")
+    Ecrire("-Pour obtenir l'ensembles des ancêtres situés à une certaine génération d'un individu, entrez 2")
+    Ecrire("-Pour afficher l'arbre d'un individu, entrez 3")
+    Ecrire("-Pour supprimer un individu et ses ancêtres, entrez 4")
+    Ecrire("-Pour obtenir l'ensemble des individus qui n'ont qu'un parent connu, entrez 5")
+    Ecrire("-Pour obtenir l'ensemble des individus qui dont les deux parents sont connus, entrez 6")
+    Ecrire("-Pour obtenir l'ensemble des individus dont les 2 parents sont inconnus, entrez 7")
+    Ecrire("-Pour identifier les ancêtres d'un individu sur n générations, entrez 8")
+    Ecrire("-Pour vérifier que 2 individus un ou plusieurs ancêtres homonymes, entrez 9")  
+    Ecrire("-Pour modifier une information d'un individu dans le registre, entrer 10") 
+    Ecrire("-Pour quitter le programme, entrez q")
+
+
+    Lire(reponse)
+
+    Ecrire("-Vous avez choisi l'option ...")
+    ...
+    Ecrire("Fin de l'action ...")
+
+Fin TANT QUE
+
+
+
+
+
+
+    -Raffinage de "Définir les opérations de manipulations de l'arbre."
+
+- procedure Initialiser_Arbre(A : out T_Arbre_Genealogique)
+    Post=> A=Null
+
+- procedure Ajouter(A: in out T_Arbre_Genealogique,R: in out T_Registre,Info: in T_Information,Cle_parent: in T_Cle,Cle_enfant: in T_Cle)
+    --exception Est_Absent_Cle dans le cas ou Cle_enfant n'existe pas.
+
+- function Obtenir_nb_ancetres(A: in T_Arbre_Genealogique, Cle: in T_Cle) retourne T_Cle
+    --exception Est_Absent_Cle dans le cas ou Cle n'existe pas.
+
+- function Obtenir_nb_ancetres_Gen(A : in T_Arbre_Genealogique, Cle: in T_Cle, Gen : in T_Cle) retourne Liste 
+    --exception Est_Absent_Cle dans le cas ou Cle n'existe pas.
+
+- procedure Afficher_Arbre(A : in T_Arbre_Genealogique, Cle : in T_Cle)
+    --exception Est_Absent_Cle dans le cas ou Cle n'existe pas.
+
+- procedure Supprimer_Noeud(A : in out T_Arbre_Genealogique, Cle : in T_Cle)
+    --exception Est_Absent_Cle dans le cas ou Cle n'existe pas.
+
+- function Un_Parent(A: in T_Arbre_Genealogique) retourne Liste
+
+- function Deux_Parents(A:in T_Arbre_Genealogique) retourne Liste
+
+- function Aucun_Parent(A : in T_Arbre_Genealogique) retourne Liste
+
+- function Ancetres_Gen(A : in T_Arbre_Genealogique, Gen: in T_Cle) retourne Liste
+
+- function Homonyme(A: in T_Arbre_Genealogique, n: in T_Cle, m: in T_Cle) retourne Booléen
+
+- procedure Modifier(R:in out T_Registre, Cle:in T_Cle)
+
+    -Raffinage de "Définir les opérations de manipulations du registre."
+
+
+-Type T_Registre est très privé.
+-Type T_Registre est un pointeur sur T_Cellule_Registre.
+-Type T_Cellule_Registre est une cellule contenant une clé, un type T_Information générique et un pointeur T_Registre pour la case suivante.
+
+    procedure Initialiser_R(R: out T_Registre)
+
+    procedure Ajouter_R(R: in out T_Registre,Cle: in T_Cle, I: in T_Information)
+
+    procedure Supprimer_R(R:in out T_Registre, Cle:in T_Cle)
+
+    procedure Modifier_R(R:in out T_Registre, Cle:in T_Cle, I: in T_Information)

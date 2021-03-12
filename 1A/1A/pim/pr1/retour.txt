@@ -1,0 +1,46 @@
+% Evaluation du projet "tables de multiplication"
+% PIM 2019-2020
+%
+
+# Total (20 pt) : 11
+
+# Compilation (-5 pt) : 
+
+
+# Raffinage (6 pt) : 2
+
+* Mauvaise utilisation de la méthode des raffinages
+    | Chaque raffinage est un algorithme qui autorise des actions (ou
+    | expressions) complexes.  Ce n'est pas une liste d'objectifs à réaliser.
+* La décomposition d'une étape complexe ne respecte pas son objectif
+    | Ne fait pas ce qui est attendu
+    | Ou fait plus que ce qui est attendu
+* Raffinage trop gros : il manque des actions complexes !
+    | Une étape fait apparaître trop d'instructions ou structures de contrôle
+    | et devrait donc faire apparaître des actions complexes à leur place
+* Raffinages incomplets (il manque des niveaux)
+    | tous les aspects du sujet doivent été détaillés :
+    | saisie contrôlée, affichage de la mention, etc.
+
+# Code (6 pt) : 4
+
+* Mauvaise aération du code / Mauvaise indentation du code
+* Un commentaire doit expliquer le rôle des variables (lors de leur déclaration)
+* Il faut utiliser des constantes nommées et pas des constantes littérales
+    | Les seules consantes littérales autorisées sont -1, 0 et 1.
+* Non respect des règles de programmation énoncés en cours/TD/TP
+    | Toujours un Sinon pour un Si, etc.
+    | Pas de exit sauf pour faire un Répéter (juste avant le end loop).
+
+# Fonctionnel (5 pt) : 4 
+
+* Respecter l'énoncé pour formuler la question (multiplication)
+* Afficher la table à réviser : plus long et au moins 1 s. au dessus de la moyenne.
+
+# Questions (LISEZ-MOI.txt et questionnaire) (3 pt) : 1
+
+* Pas d'information pertinente sur les tests faits.
+* La partie difficulté n'est pas claire.
+* 15 questions au lieu de 10 : non convainquant
+* Abandonner : non convainquant
+

@@ -1,0 +1,152 @@
+package fenetre;
+
+import territoires.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.*;
+
+import principal.*;
+
+public class Carte implements Observer  {
+	protected Territoire[][] matrice;
+	protected JLabel[][] matrice_carte;
+    
+	
+    /*
+	ImageIcon Viking_C = new ImageIcon(Main.getChemin()+ "Viking_Capitale.jpg");
+	ImageIcon Viking_T = new ImageIcon(Main.getChemin() +"Viking_Territoire.jpg");
+	ImageIcon Romain_C = new ImageIcon(Main.getChemin()+"Romain_Capitale.jpg");
+	ImageIcon Romain_T = new ImageIcon(Main.getChemin()+"Romain_Territoire.jpg");
+	ImageIcon Egyptien_C = new ImageIcon(Main.getChemin()+"Egyptien_Capitale.jpg");
+	ImageIcon Egyptien_T = new ImageIcon(Main.getChemin()+"Egyptien_Territoire.jpg");
+	ImageIcon Libre = new ImageIcon(Main.getChemin()+"Libre.jpg");
+
+*/
+	private int x = (int)(Main.getTaillePanelCentral()/Main.getNbLignes()*0.9);
+	private int y = (int)(Main.getTaillePanelCentral()/Main.getNbColonnes()*0.9);
+	
+	ImageIcon Viking_C = new ImageIcon(new ImageIcon(Main.CHEMIN + "Viking_Capitale.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+	ImageIcon Viking_T = new ImageIcon(new ImageIcon(Main.CHEMIN + "Viking_Territoire.jpg").getImage().getScaledInstance(x, y, Image.SCALE_DEFAULT));
+	
+	ImageIcon Romain_C = new ImageIcon(new ImageIcon(Main.CHEMIN + "Romain_Capitale.jpg").getImage().getScaledInstance(x, y, Image.SCALE_DEFAULT));
+	ImageIcon Romain_T = new ImageIcon(new ImageIcon(Main.CHEMIN + "Romain_Territoire.jpg").getImage().getScaledInstance(x, y, Image.SCALE_DEFAULT));
+	 
+	ImageIcon Egyptien_C = new ImageIcon(new ImageIcon(Main.CHEMIN + "Egyptien_Capitale.jpg").getImage().getScaledInstance(x, y, Image.SCALE_DEFAULT));
+	ImageIcon Egyptien_T = new ImageIcon(new ImageIcon(Main.CHEMIN + "Egyptien_Territoire.jpg").getImage().getScaledInstance(x, y, Image.SCALE_DEFAULT));
+	
+	ImageIcon Libre = new ImageIcon(new ImageIcon(Main.CHEMIN + "Libre.jpg").getImage().getScaledInstance(x, y, Image.SCALE_DEFAULT));
+	
+	
+	//(int i = 0; i < this.matrice[0].length; i++)
+	//(int j = 0; j < this.matrice[i].length; j++)
+	public Carte(Territoire[][] matrice,int lignes, int colonnes) {
+		System.out.println(x + " et " +  y);
+		this.matrice = new Territoire[lignes][colonnes];
+		for (int i = 0; i<lignes; i++) {
+			for  (int j = 0; j<colonnes; j++){
+				
+				this.matrice[i][j] = matrice[i][j];
+				}
+			}
+		
+		
+		
+	this.matrice_carte = new JLabel[lignes][colonnes];
+	for (int i = 0; i < lignes; i++) {
+		for (int j = 0; j < colonnes; j++) {
+			this.matrice_carte[i][j] = new JLabel();
+			System.out.println("test1");
+			
+			System.out.println("tesssst");
+			if (this.matrice[i][j].getFaction() != null) {
+			if (this.matrice[i][j].getFaction().getNom() != null) {
+			switch (this.matrice[i][j].getFaction().getNom()) {
+			case "Vikings":
+				if (matrice[i][j] instanceof Capitale) {
+					if (Viking_C == null) {System.out.println("C NUUUUL");}
+					this.matrice_carte[i][j].setIcon(Viking_C);
+					System.out.println("Territoire Ajout�");
+
+				} else {
+					if (Viking_T == null) {System.out.println("C NUUUUL");}
+
+					this.matrice_carte[i][j].setIcon(Viking_T);
+					System.out.println("Territoire Ajout�");
+
+				}
+				break;
+			case "Romains":
+				if (matrice[i][j] instanceof Capitale) {
+					this.matrice_carte[i][j].setIcon(Romain_C);
+				} else {
+					this.matrice_carte[i][j].setIcon(Romain_T);
+				}
+				break;
+			case "Egyptiens":
+				if (matrice[i][j] instanceof Capitale) {
+					this.matrice_carte[i][j].setIcon(Egyptien_C);
+				} else {
+					this.matrice_carte[i][j].setIcon(Egyptien_T);
+				}
+				break;
+				}
+			}
+		}else {
+			this.matrice_carte[i][j].setIcon(Libre);
+			}
+		}	
+	}
+}
+	
+
+
+	public JLabel[][] getMatrice_carte() {
+		return matrice_carte;
+	}
+
+
+
+	public void setMatrice_carte(JLabel[][] matrice_carte) {
+		this.matrice_carte = matrice_carte;
+	}
+
+
+
+	@Override
+	public void update(Observable arg0, Object arg1) {	
+			for (int i = 0; i < this.matrice.length; i++) {
+				for (int j = 0; j < this.matrice[i].length; j++) {
+					
+						
+						switch (matrice[i][j].getFaction().getNom()) {
+						case "Viking":
+							if (matrice[i][j] instanceof Capitale) {
+								this.matrice_carte[i][j].setIcon(Viking_C);
+							} else {
+								this.matrice_carte[i][j].setIcon(Viking_T);
+							}
+							break;
+						case "Romain":
+							if (matrice[i][j] instanceof Capitale) {
+								this.matrice_carte[i][j].setIcon(Romain_C);
+							} else {
+								this.matrice_carte[i][j].setIcon(Romain_T);
+							}
+							break;
+						case "Egyptien":
+							if (matrice[i][j] instanceof Capitale) {
+								this.matrice_carte[i][j].setIcon(Egyptien_C);
+							} else {
+								this.matrice_carte[i][j].setIcon(Egyptien_T);
+							}
+							break;
+					}
+				}
+			}
+			
+		}
+	}
+
+
+

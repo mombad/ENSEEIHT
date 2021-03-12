@@ -1,0 +1,11 @@
+function X = moyenne(I)
+X=zeros(2,1);
+I_s=single(I);
+R= reshape(I_s(:,:,1).',1,[]);
+V= reshape(I_s(:,:,2).',1,[]);
+B= reshape(I_s(:,:,3).',1,[]);
+I_normalise= [R' V' B'];
+s=I_normalise(:,1) + I_normalise(:,2) + I_normalise(:,3);
+I_normalise=I_normalise./s;
+X(1)=mean(I_normalise(:,1));
+X(2)=mean(I_normalise(:,2));

@@ -1,0 +1,2 @@
+J'ai conçu et programmé les classes Stratégie dont la classe StrategieIA qui permet à l'ordinateur de jouer.
+J'ai notamment programmé une méthode de parcours de graphe qui permet de calculer un chemin pour déplacer des troupes sur les territoires.

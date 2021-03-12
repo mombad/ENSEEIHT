@@ -1,0 +1,29 @@
+package allumettes;
+
+public class Procuration implements Jeu {
+	
+	private JeuReel partie;
+	
+	public Procuration(int nombreInitialAllumettes) {
+		this.partie = new JeuReel(nombreInitialAllumettes);
+	}
+	@Override
+	public int getNombreAllumettes() {
+		return this.partie.getNombreAllumettes();
+	}
+
+	@Override
+	public void retirer(int nbPrises) throws CoupInvalideException, OperationInterditeException {
+			throw new OperationInterditeException();
+		
+	}
+	
+	public void retirerPartie(int nbPrises) throws CoupInvalideException {
+		this.partie.retirer(nbPrises);
+	}
+
+	
+
+}
+
+

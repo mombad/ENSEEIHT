@@ -1,0 +1,26 @@
+package troupes;
+
+public abstract class Troupe {
+
+	protected double atk;
+	protected double def;
+	public static double PRIX;
+
+	/* Renvoie la statistique d'attaque de la troupe. */
+	public double getATK() {
+		return atk;
+	}
+
+	/* Renvoie la statistique de défense de la troupe. */
+	public double getDEF() {
+		return def;
+	}
+
+
+	/* Améliore les statistiques de la troupe. */
+	public void majstats() {
+		atk = atk * 1.15 ;
+		def = def * 1.15 ;
+	}
+
+}

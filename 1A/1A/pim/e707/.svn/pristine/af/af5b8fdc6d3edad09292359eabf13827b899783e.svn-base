@@ -1,0 +1,45 @@
+with Registre;
+
+Package arbre_binaire is 
+
+	Type T_Arbre_Binaire is limited private;
+
+	procedure Initialiser_Arbre(A : out T_Arbre_Binaire)
+    		Post=> A=Null;
+
+	procedure Ajouter(A: in out T_Arbre_Binaire,R: in out T_Registre,Info: in T_Information,Cle_parent: in Integer,Cle_enfant: in Integer);
+    --exception Est_Absent_Cle dans le cas ou Cle_enfant n'existe pas.
+	    
+	function Obtenir_nb_ancetres(A: in T_Arbre_Binaire, Cle: in Integer) return Integer;
+    --exception Est_Absent_Cle dans le cas ou Cle n'existe pas.
+
+	function Obtenir_nb_ancetres_Gen(A : in T_Arbre_Binaire, Cle: in Integer, Gen : in Integer) return Integer;
+    --exception Est_Absent_Cle dans le cas ou Cle n'existe pas.
+
+	procedure Afficher_Arbre(A : in T_Arbre_Binaire, Cle : in Integer);
+    --exception Est_Absent_Cle dans le cas ou Cle n'existe pas.
+
+	procedure Supprimer_Noeud(A : in out T_Arbre_Binaire, Cle : in Integer);
+    --exception Est_Absent_Cle dans le cas ou Cle n'existe pas.
+
+	function Un_Parent(A: in T_Arbre_Binaire) return Array;
+
+
+	function Deux_Parents(A:in T_Arbre_Binaire) return Array;
+
+	function Aucun_Parent(A : in T_Arbre_Binaire) return Array;
+
+	function Ancetres_Gen(A : in T_Arbre_Binaire, Gen: in Integer, cle: in Integer) return Array;
+
+	function Homonyme(A: in T_Arbre_Binaire, n: in Integer, m: in Integer) return boolean;
+
+
+
+	Type T_Cellule_Arbre;
+	Type T_Arbre_Binaire is access T_Cellule_Arbre;
+	Type T_Cellule_Arbre is 
+	    record
+	    	Cle: Integer;
+	    	pere: T_arbre_binaire;
+	    	mere: T_arbre_binaire;
+	    end record;

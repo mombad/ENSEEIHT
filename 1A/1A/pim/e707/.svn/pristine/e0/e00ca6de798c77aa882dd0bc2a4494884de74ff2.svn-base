@@ -1,0 +1,28 @@
+with registre;
+
+procedure tests_registre(R: T_Registre) is 
+begin
+    
+    Initialiser_R(R);
+    pragma assert (Est_Vide_R(R));
+    
+    Ajouter_R_individu(R,1);
+    Ajouter_R_info(R,1);
+    Ajouter_R_info(R,1);
+    
+    Afficher_R(R);
+    
+    Modifier_R(R);
+    Afficher_R(R);
+    
+    Supprimer_R_information(R);
+    Afficher_R(R);
+    
+    Supprimer_R_individu(R,1);
+    pragma assert (Est_Vide(R));
+    
+end tests_registre;
+            
+        
+
+

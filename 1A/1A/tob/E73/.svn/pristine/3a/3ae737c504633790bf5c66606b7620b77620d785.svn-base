@@ -1,0 +1,22 @@
+package src.principal;
+import src.troupes.*;
+
+public class CapaciteIndiens implements Capacite {
+    
+    //Attribut
+	Faction Indiens;
+
+	public void getCAPACITE() {
+        System.out.println("Après activation de la capacité, les Indiens volent des troupes a un territoire voisin ennemi.");
+    }
+    
+    public void useCAPACITE() {
+        Troupe troupevol;
+        if (this.Indiens != this.Indiens.territoires[0].voisins[0].faction) {
+			    this.Indiens.territoires[0].troupes.add(troupevol);
+                this.Indiens.territoires[0].voisins.troupes.remove(troupevol);
+			}
+        }
+        
+
+}

@@ -1,0 +1,22 @@
+[MAPPING FILE]
+/tmp/GNAT-TEMP-000003.TMP
+[TOOLCHAIN VERSION]
+ada
+GNAT 2019
+[MAIN BASE NAME]
+arbre_binaire
+[COMPILER PATH]
+/applications/gnat/bin/gcc
+[COMPILER LEADING SWITCHES]
+-c
+-x
+ada
+-gnatA
+[MAIN DEPENDENCY FILE]
+/home/mbenahme/e707/livrables/arbre_binaire.ali
+[DEPENDENCY FILES]
+[BINDING OPTIONS]
+gnatbind_prefix=
+[PROJECT FILES]
+/home/mbenahme/e707/livrables/default.gpr
+20191213113355
