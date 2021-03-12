@@ -1,4 +1,0 @@
-J'ai conçu et programmé les classes Stratégie dont la classe StrategieIA qui permet à l'ordinateur de jouer.
-L'IA effectue d'abord un test pour voir si elle est menacée. Si elle ne l'est pas, 
-elle regarde si elle a une opportunité d'attaque.
-J'ai notamment programmé une méthode de parcours de graphe qui permet de calculer un chemin pour déplacer des troupes sur les territoires.
