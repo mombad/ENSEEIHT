@@ -1,9 +1,0 @@
-package allumettes;
-
-public class EntreeInvalideException extends Exception {
-	
-	public EntreeInvalideException() {
-		super("Vous devez donner un entier");
-
-	}
-}

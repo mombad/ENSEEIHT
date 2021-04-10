@@ -1,4 +1,0 @@
-Début de la vérification...
-[ERROR] Jeu.java:17: La ligne excède 90 caractères (trouvé 92). [LineLength]
-[ERROR] Partie.java:71: La ligne excède 90 caractères (trouvé 101). [LineLength]
-Vérification terminée.

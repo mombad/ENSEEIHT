@@ -1,8 +1,0 @@
-Début de la vérification...
-[ERROR] Cercle.java:28:5: Le commentaire Javadoc est placé au mauvais endroit. [InvalidJavadocPosition]
-[ERROR] Cercle.java:58: La ligne excède 90 caractères (trouvé 106). [LineLength]
-[ERROR] Cercle.java:76: La ligne excède 90 caractères (trouvé 106). [LineLength]
-[ERROR] Cercle.java:107:8: Balise Javadoc @param inutilisée pour 'ndiamtre'. [JavadocMethod]
-[ERROR] Cercle.java:110:36: Balise Javadoc @param manquante pour 'ndiametre'. [JavadocMethod]
-[ERROR] Cercle.java:183:15: 'couleur' masque un attribut. [HiddenField]
-Vérification terminée.
